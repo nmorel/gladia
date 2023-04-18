@@ -1,9 +1,14 @@
 {
   "name": "gladia",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "lint": "nx run-many --target=lint",
+    "tscheck": "nx run-many --target=tscheck",
+    "build": "nx run-many --target=build"
+  },
   "devDependencies": {
     "@gladia/eslint": "workspace:*",
+    "nx": "15.9.2",
     "prettier": "^2.8.7"
   }
 }
