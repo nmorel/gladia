@@ -1,0 +1,9 @@
+{
+  "name": "gladia",
+  "version": "1.0.0",
+  "scripts": {},
+  "devDependencies": {
+    "@gladia/eslint": "workspace:*",
+    "prettier": "^2.8.7"
+  }
+}
