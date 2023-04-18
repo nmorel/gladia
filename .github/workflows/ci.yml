@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  ci:
+    name: CI
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: pnpm/action-setup@v2.2.2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint & Build
+        run: pnpm nx run-many --targets=lint,tscheck,build
