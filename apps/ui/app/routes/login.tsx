@@ -1,15 +1,26 @@
-import type {ActionFunction} from '@remix-run/node'
+import type {ActionFunction, LoaderFunction} from '@remix-run/node'
+import {redirect} from '@remix-run/node'
 import {type V2_MetaFunction} from '@remix-run/node'
-import {Form, Link, useActionData, useNavigation} from '@remix-run/react'
+import {Form, Link, useNavigation} from '@remix-run/react'
+import {userTokenCookie} from '~/cookies.server'
+
+export const loader: LoaderFunction = async ({request}) => {
+  const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))
+  if (userToken) {
+    return redirect('/')
+  }
+
+  return null
+}
 
 export const meta: V2_MetaFunction = () => {
-  return [{title: 'Sign in'}]
+  return [{title: 'Login'}]
 }
 
 export const action: ActionFunction = async ({request}) => {
   const body = await request.formData()
   const email = body.get('email')
-  if (typeof email === 'string') {
+  if (typeof email !== 'string') {
     return {}
   }
   const password = body.get('password')
@@ -17,10 +28,36 @@ export const action: ActionFunction = async ({request}) => {
     return {}
   }
 
-  return {}
+  try {
+    const findResponse = await fetch(new URL('users/by-email-and-password', process.env.API_URL), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'User-Agent': '',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+
+    if (!findResponse.ok) {
+      return {}
+    }
+
+    const user = await findResponse.json()
+    return redirect('/', {
+      headers: {
+        'Set-Cookie': await userTokenCookie.serialize(user),
+      },
+    })
+  } catch (err) {
+    return {}
+  }
 }
 
-export default function SignIn() {
+export default function Login() {
   const transition = useNavigation()
   const isSubmitting = transition.state !== 'idle'
   return (
@@ -37,6 +74,7 @@ export default function SignIn() {
             name="email"
             type="email"
             placeholder="Enter your email"
+            autoComplete="username"
             required
             disabled={isSubmitting}
             className="input input-sm input-accent w-full"
@@ -52,6 +90,8 @@ export default function SignIn() {
             name="password"
             type="password"
             placeholder="Enter your password"
+            minLength={6}
+            autoComplete="current-password"
             required
             disabled={isSubmitting}
             className="input input-sm input-accent w-full"

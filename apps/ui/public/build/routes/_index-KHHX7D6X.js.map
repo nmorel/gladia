@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../app/routes/_index.tsx"],
-  "sourcesContent": ["import {redirect} from '@remix-run/node'\n\nexport async function loader() {\n  const token = false\n  if (!token) {\n    return redirect('/login')\n  }\n\n  return {}\n}\n\nexport default function () {\n  return <div>Hello</div>\n}\n"],
-  "mappings": ";;;;;;AAYS;AADM,SAAR,gBAAoB;AACzB,SAAO,mDAAC,SAAI,qBAAL;AAAA;AAAA;AAAA;AAAA,SAAU;AACnB;",
-  "names": []
-}

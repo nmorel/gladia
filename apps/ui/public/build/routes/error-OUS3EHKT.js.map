@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../app/routes/error.tsx"],
-  "sourcesContent": ["import {type V2_MetaFunction} from '@remix-run/node'\n\nexport const meta: V2_MetaFunction = () => {\n  return [{title: 'Error'}]\n}\n\nexport default function Error() {\n  return (\n    <>\n      <h1>An error occured</h1>\n      <p>Sorry \uD83E\uDD37</p>\n    </>\n  )\n}\n"],
-  "mappings": ";;;;;;AAQI;AANG,IAAM,OAAwB,MAAM;AACzC,SAAO,CAAC,EAAC,OAAO,QAAO,CAAC;AAC1B;AAEe,SAAR,QAAyB;AAC9B,SACE,sFACE;AAAA,uDAAC,QAAG,gCAAJ;AAAA;AAAA;AAAA;AAAA,WAAoB;AAAA,IACpB,mDAAC,OAAE,+BAAH;AAAA;AAAA;AAAA;AAAA,WAAW;AAAA,OAFb;AAAA;AAAA;AAAA;AAAA,SAGA;AAEJ;",
-  "names": []
-}

@@ -1,14 +1,25 @@
+import type {LoaderFunction} from '@remix-run/node'
 import {redirect} from '@remix-run/node'
+import {Link, useLoaderData} from '@remix-run/react'
+import {userTokenCookie} from '~/cookies.server'
 
-export async function loader() {
-  const token = false
-  if (!token) {
+export const loader: LoaderFunction = async ({request}) => {
+  const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))
+  if (!userToken) {
     return redirect('/login')
   }
 
-  return {}
+  return {userToken}
 }
 
 export default function () {
-  return <div>Hello</div>
+  const {userToken} = useLoaderData()
+  return (
+    <div>
+      <h1>Hello {userToken.name}!!</h1>
+      <Link to={'/logout'} className="underline">
+        Logout
+      </Link>
+    </div>
+  )
 }
