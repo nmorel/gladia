@@ -5,6 +5,7 @@
     "lint": "eslint ./",
     "tscheck": "tsc --noEmit",
     "db:generate": "prisma generate",
+    "schema:generate": "node -r tsconfig-paths/register -r ts-node/register ./scripts/generateSchema.ts",
     "build": "nest build",
     "dev": "nest start --debug --watch",
     "test": "jest --coverage",

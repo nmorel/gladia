@@ -1,0 +1,8 @@
+{
+  "name": "@gladia/schema",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "pnpm build & nx watch --projects=@gladia/api --includeDependencies -- pnpm build",
+    "build": "pnpm --filter \"@gladia/api\" schema:generate"
+  }
+}
