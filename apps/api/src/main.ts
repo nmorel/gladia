@@ -9,11 +9,21 @@ async function bootstrap() {
     .setTitle('Gladia API')
     .setDescription('Gladia API')
     .setVersion('1.0')
-    .addTag('gladia')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'User token',
+        description: 'Enter user token you got in response of /auth/sign-in or /auth/sign-up apis',
+        in: 'header',
+      },
+      'UserToken'
+    )
     .build()
   patchNestjsSwagger()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
+  SwaggerModule.setup('doc', app, document, {customSiteTitle: 'Gladia API'})
   await app.listen(process.env.PORT || 3000)
 }
 bootstrap()
