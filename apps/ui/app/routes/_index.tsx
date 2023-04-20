@@ -1,7 +1,11 @@
-import type {LoaderFunction} from '@remix-run/node'
+import type {LoaderFunction, V2_MetaFunction} from '@remix-run/node'
 import {redirect} from '@remix-run/node'
 import {Link, useLoaderData} from '@remix-run/react'
 import {userTokenCookie} from '~/cookies.server'
+
+export const meta: V2_MetaFunction = () => {
+  return [{title: 'Gladia'}]
+}
 
 export const loader: LoaderFunction = async ({request}) => {
   const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))
