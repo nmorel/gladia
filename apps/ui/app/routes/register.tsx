@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({request}) => {
   }
 
   try {
-    const createResponse = await fetch(new URL('users', process.env.API_URL), {
+    const signUpResponse = await fetch(new URL('auth/sign-up', process.env.API_URL), {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -47,13 +47,16 @@ export const action: ActionFunction = async ({request}) => {
       }),
     })
 
-    if (!createResponse.ok) {
+    if (!signUpResponse.ok) {
       return {}
     }
 
-    const user = await createResponse.json()
-    console.log(user)
-    return redirect('/login')
+    const userToken = await signUpResponse.json()
+    return redirect('/', {
+      headers: {
+        'Set-Cookie': await userTokenCookie.serialize(userToken),
+      },
+    })
   } catch (err) {
     return {}
   }

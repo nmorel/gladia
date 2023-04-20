@@ -29,7 +29,7 @@ export const action: ActionFunction = async ({request}) => {
   }
 
   try {
-    const findResponse = await fetch(new URL('users/by-email-and-password', process.env.API_URL), {
+    const signInResponse = await fetch(new URL('auth/sign-in', process.env.API_URL), {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -42,14 +42,15 @@ export const action: ActionFunction = async ({request}) => {
       }),
     })
 
-    if (!findResponse.ok) {
+    // TODO show error
+    if (!signInResponse.ok) {
       return {}
     }
 
-    const user = await findResponse.json()
+    const {token} = await signInResponse.json()
     return redirect('/', {
       headers: {
-        'Set-Cookie': await userTokenCookie.serialize(user),
+        'Set-Cookie': await userTokenCookie.serialize(token),
       },
     })
   } catch (err) {

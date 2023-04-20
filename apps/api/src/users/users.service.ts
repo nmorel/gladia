@@ -1,38 +1,30 @@
 import {Injectable} from '@nestjs/common'
 import {PrismaService} from 'nestjs-prisma'
 import {User} from '@prisma/client'
-import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async findUserByEmailAndPassword(email: string, password: string) {
-    const user = await this.prisma.user.findUniqueOrThrow({where: {email}})
-    const match = await bcrypt.compare(password, user.password)
-    if (!match) {
-      throw new Error('Not found')
-    }
-    return this.filterUser(user)
+  findById(userId: User['id']): Promise<User> {
+    return this.prisma.user.findUniqueOrThrow({where: {id: userId}})
   }
 
-  async createUser(newUser: Omit<User, 'id'>) {
-    const hashedPassword = await bcrypt.hash(newUser.password, 10)
-    return this.filterUser(
-      await this.prisma.user.create({
-        data: {
-          ...newUser,
-          password: hashedPassword,
-        },
-      })
-    )
+  findByEmail(email: User['email']): Promise<User> {
+    return this.prisma.user.findUniqueOrThrow({where: {email}})
+  }
+
+  createUser(newUser: Omit<User, 'id'>) {
+    return this.prisma.user.create({
+      data: newUser,
+    })
+  }
+
+  updateUser(userId: User['id'], data: Partial<Omit<User, 'id' | 'email' | 'password'>>) {
+    return this.prisma.user.update({where: {id: userId}, data})
   }
 
   async deleteUser(userId: User['id']) {
-    return this.filterUser(await this.prisma.user.delete({where: {id: userId}}))
-  }
-
-  private filterUser({password, ...user}: User): Omit<User, 'password'> {
-    return user
+    return await this.prisma.user.delete({where: {id: userId}})
   }
 }

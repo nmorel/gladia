@@ -5,5 +5,4 @@ export const userTokenCookie = createCookie('userToken', {
   sameSite: 'strict',
   secure: true,
   maxAge: 604_800, // one week
-  secrets: [process.env.SECRET_COOKIE ?? 's3cr3t'],
 })
