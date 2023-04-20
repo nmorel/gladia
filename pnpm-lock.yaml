@@ -1,5 +1,10 @@
 lockfileVersion: '6.0'
 
+patchedDependencies:
+  '@remix-run/node@1.15.0':
+    hash: em7w6jhjiiax6p53wfx67det5y
+    path: patches/@remix-run__node@1.15.0.patch
+
 importers:
 
   .:
@@ -115,7 +120,7 @@ importers:
         version: 1.15.0(express@4.18.2)
       '@remix-run/node':
         specifier: ^1.15.0
-        version: 1.15.0
+        version: 1.15.0(patch_hash=em7w6jhjiiax6p53wfx67det5y)
       '@remix-run/react':
         specifier: ^1.15.0
         version: 1.15.0(react-dom@18.2.0)(react@18.2.0)
@@ -2890,11 +2895,11 @@ packages:
     peerDependencies:
       express: ^4.17.1
     dependencies:
-      '@remix-run/node': 1.15.0
+      '@remix-run/node': 1.15.0(patch_hash=em7w6jhjiiax6p53wfx67det5y)
       express: 4.18.2
     dev: false
 
-  /@remix-run/node@1.15.0:
+  /@remix-run/node@1.15.0(patch_hash=em7w6jhjiiax6p53wfx67det5y):
     resolution: {integrity: sha512-CS0p8T6A2KvMoAW5zzLA/BtNNCsv34A5RJoouJvXK9/o6MriAQ/YSugg6ldS5mec49neSep+CGeL1RS6tL+3NQ==}
     engines: {node: '>=14'}
     dependencies:
@@ -2908,6 +2913,7 @@ packages:
       source-map-support: 0.5.21
       stream-slice: 0.1.2
     dev: false
+    patched: true
 
   /@remix-run/react@1.15.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-S0RuIeHvQTqryCZ3KVl8EsIWCqL6/ky1/kmDpN2n5Pdjew2BLC6DX7OdrY1ZQjbzOMHAROsZlyaSSVXCItunag==}
