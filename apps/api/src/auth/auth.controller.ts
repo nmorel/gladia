@@ -1,17 +1,27 @@
-import {Body, Controller, Post} from '@nestjs/common'
+import {Body, Controller, Post, UsePipes} from '@nestjs/common'
 import {AuthService} from './auth.service'
+import {ZodValidationPipe} from '@anatine/zod-nestjs'
+import {ApiCreatedResponse} from '@nestjs/swagger'
+import {SignInDto, SignInUpResponseDto, SignUpDto} from './auth.dto'
 
 @Controller('auth')
+@UsePipes(ZodValidationPipe)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-in')
-  signIn(@Body() body: {email: string; password: string}) {
+  @ApiCreatedResponse({
+    type: SignInUpResponseDto,
+  })
+  signIn(@Body() body: SignInDto): Promise<SignInUpResponseDto> {
     return this.authService.signIn(body)
   }
 
   @Post('sign-up')
-  signUp(@Body() body: {email: string; password: string; name: string}) {
+  @ApiCreatedResponse({
+    type: SignInUpResponseDto,
+  })
+  signUp(@Body() body: SignUpDto): Promise<SignInUpResponseDto> {
     return this.authService.signUp(body)
   }
 }

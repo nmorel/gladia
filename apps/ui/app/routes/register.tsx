@@ -45,6 +45,13 @@ export const action: ActionFunction = async ({request}) => {
   })
 
   if (!signUpResponse.ok) {
+    let errorText: string
+    try {
+      errorText = await signUpResponse.text()
+    } catch (err) {
+      errorText = `[${signUpResponse.status}] ${signUpResponse.statusText}`
+    }
+    console.error('Sign-up error', errorText)
     return {error: signUpResponse.status}
   }
 
