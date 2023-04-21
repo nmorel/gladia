@@ -8,18 +8,11 @@ import {
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common'
-import {
-  ApiConsumes,
-  ApiCreatedResponse,
-  ApiHeaders,
-  ApiOperation,
-  ApiProperty,
-  ApiTags,
-} from '@nestjs/swagger'
-import {AuthGuard} from 'src/auth/auth.guard'
-import {TranscriptionService} from './transcription.service'
 import {FileInterceptor} from '@nestjs/platform-express'
+import {ApiConsumes, ApiCreatedResponse, ApiHeaders, ApiOperation, ApiTags} from '@nestjs/swagger'
+import {AuthGuard} from 'src/auth/auth.guard'
 import {AudioToTextDto} from './transcription.dto'
+import {TranscriptionService} from './transcription.service'
 
 @Controller('transcription')
 @UseGuards(AuthGuard)
