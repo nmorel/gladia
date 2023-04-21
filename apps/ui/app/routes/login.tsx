@@ -3,7 +3,7 @@ import {redirect} from '@remix-run/node'
 import {type V2_MetaFunction} from '@remix-run/node'
 import {Form, Link, useActionData, useNavigation} from '@remix-run/react'
 import {z} from 'zod'
-import {apiClient} from '~/api.server'
+import {apiClient, parseApiError} from '~/api.server'
 import {FormError} from '~/components/FormError'
 import {userTokenCookie} from '~/cookies.server'
 
@@ -40,11 +40,10 @@ export const action: ActionFunction = async ({request}) => {
       requestBody: signInPayload,
     })
     token = response.token
-  } catch (err: any) {
-    const statusCode = err.status ?? 500
-    const statusText = err.body?.message ?? err.statusText ?? err.message ?? 'An error occurred'
-    console.error('Sign-in error', `[${statusCode}] ${statusText}`)
-    return {error: statusCode}
+  } catch (err) {
+    const {code, text} = parseApiError(err)
+    console.error('Sign-in error', `[${code}] ${text}`)
+    return {error: code}
   }
 
   return redirect('/', {
