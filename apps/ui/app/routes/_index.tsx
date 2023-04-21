@@ -1,6 +1,8 @@
+import type {GetProfileResponseDto} from '@gladia/sdk'
 import type {LoaderFunction, V2_MetaFunction} from '@remix-run/node'
 import {redirect} from '@remix-run/node'
 import {Link, useLoaderData} from '@remix-run/react'
+import {apiClient} from '~/api.server'
 import {userTokenCookie} from '~/cookies.server'
 
 export const meta: V2_MetaFunction = () => {
@@ -13,19 +15,16 @@ export const loader: LoaderFunction = async ({request}) => {
     return redirect('/login')
   }
 
-  const userProfileResponse = await fetch(new URL('profile', process.env.API_URL), {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'User-Agent': '',
-      'Authorization': `Bearer ${userToken}`,
-    },
-  })
-  if (!userProfileResponse.ok) {
+  let profile: GetProfileResponseDto
+  try {
+    profile = await apiClient.profile.getProfile({
+      authorization: `Bearer ${userToken}`,
+    })
+  } catch (err) {
     return redirect('/logout')
   }
 
-  return {profile: await userProfileResponse.json()}
+  return {profile}
 }
 
 export default function () {

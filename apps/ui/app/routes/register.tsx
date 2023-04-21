@@ -3,6 +3,7 @@ import {redirect} from '@remix-run/node'
 import {type V2_MetaFunction} from '@remix-run/node'
 import {Form, Link, useActionData, useNavigation} from '@remix-run/react'
 import {z} from 'zod'
+import {apiClient} from '~/api.server'
 import {FormError} from '~/components/FormError'
 import {userTokenCookie} from '~/cookies.server'
 
@@ -34,28 +35,19 @@ export const action: ActionFunction = async ({request}) => {
     return {error: 400}
   }
 
-  const signUpResponse = await fetch(new URL('auth/sign-up', process.env.API_URL), {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'User-Agent': '',
-    },
-    body: JSON.stringify(signUpPayload),
-  })
-
-  if (!signUpResponse.ok) {
-    let errorText: string
-    try {
-      errorText = await signUpResponse.text()
-    } catch (err) {
-      errorText = `[${signUpResponse.status}] ${signUpResponse.statusText}`
-    }
-    console.error('Sign-up error', errorText)
-    return {error: signUpResponse.status}
+  let token: string
+  try {
+    const response = await apiClient.auth.signUp({
+      requestBody: signUpPayload,
+    })
+    token = response.token
+  } catch (err: any) {
+    const statusCode = err.status ?? 500
+    const statusText = err.body?.message ?? err.statusText ?? err.message ?? 'An error occurred'
+    console.error('Sign-up error', `[${statusCode}] ${statusText}`)
+    return {error: statusCode}
   }
 
-  const {token} = await signUpResponse.json()
   return redirect('/', {
     headers: {
       'Set-Cookie': await userTokenCookie.serialize(token),

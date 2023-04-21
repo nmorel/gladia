@@ -3,7 +3,8 @@
   "paths": {
     "/auth/sign-in": {
       "post": {
-        "operationId": "AuthController_signIn",
+        "operationId": "sign-in",
+        "summary": "",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -26,12 +27,16 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "auth"
+        ]
       }
     },
     "/auth/sign-up": {
       "post": {
-        "operationId": "AuthController_signUp",
+        "operationId": "sign-up",
+        "summary": "",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -54,13 +59,27 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "auth"
+        ]
       }
     },
     "/profile": {
       "get": {
-        "operationId": "ProfileController_getProfile",
-        "parameters": [],
+        "operationId": "get-profile",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "",
@@ -73,38 +92,54 @@
             }
           }
         },
-        "security": [
-          {
-            "UserToken": []
-          }
+        "tags": [
+          "profile"
         ]
       },
       "patch": {
-        "operationId": "ProfileController_updateProfile",
-        "parameters": [],
+        "operationId": "update-profile",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": ""
           }
         },
-        "security": [
-          {
-            "UserToken": []
-          }
+        "tags": [
+          "profile"
         ]
       },
       "delete": {
-        "operationId": "ProfileController_deleteProfile",
-        "parameters": [],
+        "operationId": "delete-profile",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": ""
           }
         },
-        "security": [
-          {
-            "UserToken": []
-          }
+        "tags": [
+          "profile"
         ]
       }
     }
@@ -118,16 +153,6 @@
   "tags": [],
   "servers": [],
   "components": {
-    "securitySchemes": {
-      "UserToken": {
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "type": "http",
-        "name": "User token",
-        "description": "Enter user token you got in response of /auth/sign-in or /auth/sign-up apis",
-        "in": "header"
-      }
-    },
     "schemas": {
       "SignInDto": {
         "type": "object",

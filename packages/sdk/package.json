@@ -1,0 +1,26 @@
+{
+  "name": "@gladia/sdk",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "pnpm build & nx watch --projects=@gladia/schema -- pnpm build",
+    "build": "openapi -i ./node_modules/@gladia/schema/api.json -o ./src -c fetch --name Gladia --useUnionTypes --useOptions && prettier --write ./src && tsup src/index.ts --format cjs,esm --dts --clean"
+  },
+  "dependencies": {
+    "@gladia/schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@gladia/tsconfig": "workspace:*",
+    "openapi-typescript-codegen": "^0.24.0",
+    "tsup": "^6.7.0"
+  }
+}
