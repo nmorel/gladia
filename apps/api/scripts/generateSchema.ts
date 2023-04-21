@@ -8,7 +8,7 @@ async function generate() {
   const app = await NestFactory.create(AppModule)
   const document = buildOpenApiDocument(app)
   await writeFile(
-    join(__dirname, '../../../packages/schema/api.json'),
+    join(__dirname, '../../../packages/sdk/api.json'),
     JSON.stringify(document, null, 2),
     'utf-8'
   )

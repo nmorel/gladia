@@ -241,45 +241,14 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
 
-  packages/schema: {}
-
   packages/sdk:
-    dependencies:
-      '@gladia/schema':
-        specifier: workspace:*
-        version: link:../schema
-      openapi-fetch:
-        specifier: ^0.0.8
-        version: 0.0.8
     devDependencies:
       '@gladia/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
-      openapi-typescript:
-        specifier: ^6.2.1
-        version: 6.2.1
       openapi-typescript-codegen:
         specifier: ^0.24.0
         version: 0.24.0
-      tsup:
-        specifier: ^6.7.0
-        version: 6.7.0
-
-  packages/sdk copy:
-    dependencies:
-      '@gladia/schema':
-        specifier: workspace:*
-        version: link:../schema
-      openapi-fetch:
-        specifier: ^0.0.8
-        version: 0.0.8
-    devDependencies:
-      '@gladia/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      openapi-typescript:
-        specifier: ^6.2.1
-        version: 6.2.1
       tsup:
         specifier: ^6.7.0
         version: 6.7.0
@@ -8947,10 +8916,6 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openapi-fetch@0.0.8:
-    resolution: {integrity: sha512-Z65UnZugvWuPWkH39qoo/7GzF8wetP+1OsIZay1rkMSAt2gqdloZ5DmJ7gFK5CQpfhOAN184ur+pYekc60AsXQ==}
-    dev: false
-
   /openapi-typescript-codegen@0.24.0:
     resolution: {integrity: sha512-rSt8t1XbMWhv6Db7GUI24NNli7FU5kzHLxcE8BpzgGWRdWyWt9IB2YoLyPahxNrVA7yOaVgnXPkrcTDRMQtJYg==}
     hasBin: true
@@ -8960,18 +8925,6 @@ packages:
       fs-extra: 11.1.1
       handlebars: 4.7.7
       json-schema-ref-parser: 9.0.9
-    dev: true
-
-  /openapi-typescript@6.2.1:
-    resolution: {integrity: sha512-l0u3fWE7vOCSWl/FxNcB3zu/jDqi/NUCP7MSbffpCZdBwQAbljHbo+CAjPXpf47SAVE+F7ZQKOew+pnXfV1oGA==}
-    hasBin: true
-    dependencies:
-      ansi-colors: 4.1.3
-      fast-glob: 3.2.12
-      js-yaml: 4.1.0
-      supports-color: 9.3.1
-      undici: 5.22.0
-      yargs-parser: 21.1.1
     dev: true
 
   /openapi3-ts@3.2.0:
@@ -10483,11 +10436,6 @@ packages:
       has-flag: 4.0.0
     dev: true
 
-  /supports-color@9.3.1:
-    resolution: {integrity: sha512-knBY82pjmnIzK3NifMo3RxEIRD9E0kIzV4BKcyTZ9+9kWgLMxd4PrsTSMoFQUabgRBbF8KOLRDCyKgNV+iK44Q==}
-    engines: {node: '>=12'}
-    dev: true
-
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
@@ -10989,13 +10937,6 @@ packages:
 
   /undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
-    dev: true
-
-  /undici@5.22.0:
-    resolution: {integrity: sha512-fR9RXCc+6Dxav4P9VV/sp5w3eFiSdOjJYsbtWfd4s5L5C4ogyuVpdKIVHeW0vV1MloM65/f7W45nR9ZxwVdyiA==}
-    engines: {node: '>=14.0'}
-    dependencies:
-      busboy: 1.6.0
     dev: true
 
   /unicode-canonical-property-names-ecmascript@2.0.0:
