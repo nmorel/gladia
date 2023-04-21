@@ -10,7 +10,7 @@
   },
   "targetDefaults": {
     "tscheck": {
-      "dependsOn": ["db:generate"]
+      "dependsOn": ["db:generate", "^build"]
     },
     "build": {
       "dependsOn": ["db:generate", "^build"]
