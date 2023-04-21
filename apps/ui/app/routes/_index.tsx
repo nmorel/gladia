@@ -1,39 +1,15 @@
-import type {GetProfileResponseDto} from '@gladia/sdk'
-import type {LoaderFunction, V2_MetaFunction} from '@remix-run/node'
-import {redirect} from '@remix-run/node'
-import {Link, useLoaderData} from '@remix-run/react'
-import {apiClient} from '~/api.server'
-import {userTokenCookie} from '~/cookies.server'
-
-export const meta: V2_MetaFunction = () => {
-  return [{title: 'Gladia'}]
-}
-
-export const loader: LoaderFunction = async ({request}) => {
-  const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))
-  if (!userToken) {
-    return redirect('/login')
-  }
-
-  let profile: GetProfileResponseDto
-  try {
-    profile = await apiClient.profile.getProfile({
-      authorization: `Bearer ${userToken}`,
-    })
-  } catch (err) {
-    return redirect('/logout')
-  }
-
-  return {profile}
-}
+import {Link} from '@remix-run/react'
 
 export default function () {
-  const {profile} = useLoaderData()
   return (
-    <div>
-      <h1>Hello {profile.name}!!</h1>
-      <Link to={'/logout'} className="underline">
-        Logout
+    <div className="flex flex-col items-center justify-center gap-6 pt-6">
+      <h1 className="text-4xl">Welcome to Gladia!</h1>
+      <h2>What do you want to do?</h2>
+      <Link to="/transcription/audio" className="btn btn-primary btn-xl">
+        Audio Transcription
+      </Link>
+      <Link to="/transcription/video" className="btn btn-primary btn-xl">
+        Video Transcription
       </Link>
     </div>
   )

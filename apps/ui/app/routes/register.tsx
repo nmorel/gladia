@@ -4,7 +4,7 @@ import {type V2_MetaFunction} from '@remix-run/node'
 import {Form, Link, useActionData, useNavigation} from '@remix-run/react'
 import {z} from 'zod'
 import {apiClient, parseApiError} from '~/api.server'
-import {FormError} from '~/components/FormError'
+import {EmailInput, FormError, PasswordInput, TextInput} from '~/components/form'
 import {userTokenCookie} from '~/cookies.server'
 
 export const meta: V2_MetaFunction = () => {
@@ -60,69 +60,44 @@ export default function Register() {
   const data = useActionData()
   return (
     <>
-      {!!data?.error && <FormError statusCode={data?.error} />}
-      <div className="w-screen h-screen max-w-xs mx-auto flex items-center">
-        <Form method="post" action="/register" className="w-full flex flex-col gap-5">
-          <h1 className="text-center text-3xl mt-5">Create a new account</h1>
+      {!!data?.error && <FormError statusCode={data.error} />}
+      <Form method="post" action="/register" className="w-full flex flex-col gap-5">
+        <h1 className="text-center text-3xl mt-5">Create a new account</h1>
 
-          <div className="form-control w-full">
-            <label className="label" htmlFor="email">
-              <span className="label-text">Email:</span>
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Enter your email"
-              autoComplete="username"
-              required
-              disabled={isSubmitting}
-              className="input input-sm input-accent w-full"
-            />
-          </div>
+        <EmailInput
+          label="Email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          disabled={isSubmitting}
+        />
 
-          <div className="form-control w-full">
-            <label className="label" htmlFor="password">
-              <span className="label-text">Password:</span>
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              minLength={6}
-              autoComplete="current-password"
-              required
-              disabled={isSubmitting}
-              className="input input-sm input-accent w-full"
-            />
-          </div>
+        <PasswordInput
+          label="Password"
+          name="password"
+          placeholder="Enter your password"
+          minLength={6}
+          required
+          disabled={isSubmitting}
+        />
 
-          <div className="form-control w-full">
-            <label className="label" htmlFor="name">
-              <span className="label-text">Name:</span>
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              placeholder="Enter your name"
-              required
-              disabled={isSubmitting}
-              className="input input-sm input-accent w-full"
-            />
-          </div>
+        <TextInput
+          label="Name"
+          name="name"
+          placeholder="Enter your name"
+          required
+          disabled={isSubmitting}
+        />
 
-          <div className="text-right">
-            <Link to="/login" className="btn btn-outline mr-4">
-              Cancel
-            </Link>
-            <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-              Create
-            </button>
-          </div>
-        </Form>
-      </div>
+        <div className="text-right">
+          <Link to="/login" className="btn btn-outline mr-4">
+            Cancel
+          </Link>
+          <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+            Create
+          </button>
+        </div>
+      </Form>
     </>
   )
 }

@@ -12,7 +12,7 @@ export function FormError({statusCode}: {statusCode: number}) {
       break
   }
   return (
-    <div className="fixed p-4 w-screen">
+    <div className="fixed top-0 left-0 p-4 w-screen">
       <div className="alert alert-error shadow-lg">
         <div>
           <svg
