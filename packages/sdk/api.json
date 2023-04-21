@@ -142,6 +142,41 @@
           "profile"
         ]
       }
+    },
+    "/transcription/audio-to-text": {
+      "post": {
+        "operationId": "audio-to-text",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AudioToTextDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "transcription"
+        ]
+      }
     }
   },
   "info": {
@@ -222,6 +257,21 @@
           "id",
           "email",
           "name"
+        ]
+      },
+      "AudioToTextDto": {
+        "type": "object",
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary"
+          },
+          "toggle_noise_reduction": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "audio"
         ]
       }
     }

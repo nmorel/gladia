@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "dev": "pnpm build & nx watch --projects=@gladia/api --includeDependencies -- pnpm build",
+    "deev": "pnpm build & nx watch --projects=@gladia/api --includeDependencies -- pnpm build",
     "build": "pnpm --filter \"@gladia/api\" schema:generate && openapi -i ./api.json -o ./src -c fetch --name Gladia --useUnionTypes --useOptions && prettier --write ./src && tsup src/index.ts --format cjs,esm --dts --clean"
   },
   "devDependencies": {

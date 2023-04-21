@@ -1,10 +1,19 @@
 import type {ActionFunction} from '@remix-run/node'
 import {Form, useActionData, useNavigation, useParams} from '@remix-run/react'
+import {apiClient} from '~/api.server'
 import {Checkbox, FileInput, FormError, NumberInput, Select, TextInput} from '~/components/form'
+import {userTokenCookie} from '~/cookies.server'
 
 export const action: ActionFunction = async ({request}) => {
+  const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))
+
   const formData = await request.formData()
-  console.log(Object.fromEntries(formData))
+
+  const response = await apiClient.transcription.audioToText({
+    authorization: `Bearer ${userToken}`,
+    formData: Object.fromEntries(formData) as any,
+  })
+  console.log(Object.fromEntries(formData), response)
   return null
 }
 
