@@ -1,8 +1,11 @@
 import type {Dispatch, SetStateAction} from 'react'
 import {useRef} from 'react'
 import {Input} from '../form'
+import {MediaPlayer} from './MediaPlayer'
 
-export type MediaFile = {file: File; dataUrl: string} | null
+export type MediaFile =
+  | {file: File; dataUrl: string; url: string}
+  | {file?: null; dataUrl?: null; url: string}
 
 export function MediaInput({
   kind,
@@ -16,19 +19,17 @@ export function MediaInput({
   setFile: Dispatch<SetStateAction<MediaFile>>
 }) {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const isLocalFile = !!file?.file
   return (
     <>
       <Input
         type="url"
         label={`Paste an url to ${kind === 'audio' ? 'an audio' : 'a video'} file:`}
         name={`${kind}_url`}
-        hidden={!!file}
-        defaultValue={
-          kind === 'audio'
-            ? 'http://files.gladia.io/example/audio-transcription/split_infinity.wav'
-            : 'http://files.gladia.io/example/video-transcription/short-video.mp4'
-        }
-        disabled={disabled || !!file}
+        hidden={isLocalFile}
+        value={file.url}
+        onChange={(evt) => setFile((f) => ({...f, url: evt.currentTarget.value}))}
+        disabled={disabled || isLocalFile}
       />
       <Input
         type="file"
@@ -41,24 +42,20 @@ export function MediaInput({
         onChange={(evt) => {
           const file = evt.currentTarget.files?.[0]
           if (file) {
-            setFile({file, dataUrl: URL.createObjectURL(file)})
+            setFile((f) => ({file, dataUrl: URL.createObjectURL(file), url: f.url}))
           } else {
-            setFile(null)
+            setFile((f) => ({url: f.url}))
           }
         }}
       />
-      {!!file && (
+      {isLocalFile && (
         <div className="form-control">
           <label className="label font-semibold">
             <span className="label-text">
               Selected {kind} file <span className="italic">{file.file.name}</span>
             </span>
           </label>
-          {kind === 'audio' ? (
-            <audio src={file.dataUrl} controls className="w-full" />
-          ) : (
-            <video src={file.dataUrl} controls className="w-full" />
-          )}
+          <MediaPlayer kind={kind} src={file.dataUrl} />
           <button
             type="button"
             className="btn btn-accent btn-outline mt-2"
@@ -66,7 +63,7 @@ export function MediaInput({
               if (fileInputRef.current) {
                 fileInputRef.current.value = ''
               }
-              setFile(null)
+              setFile((f) => ({url: f.url}))
             }}
           >
             Pick another file

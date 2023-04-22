@@ -8,6 +8,7 @@ import {apiClient} from '~/api.server'
 import {Checkbox, FormError, Input, Select} from '~/components/form'
 import {
   DiarizationInput,
+  FormResult,
   LanguageInput,
   MediaFile,
   MediaInput,
@@ -80,11 +81,15 @@ function TranscriptionForm({kind}: {kind: 'audio' | 'video'}) {
   const isSubmitting = transition.state !== 'idle'
   const data = useActionData<typeof action>()
 
-  const [file, setFile] = useState<MediaFile>(null)
+  const [file, setFile] = useState<MediaFile>({
+    url:
+      kind === 'audio'
+        ? 'http://files.gladia.io/example/audio-transcription/split_infinity.wav'
+        : 'http://files.gladia.io/example/video-transcription/short-video.mp4',
+  })
 
   return (
     <>
-      {hasError(data) && <FormError statusCode={data.error} />}
       <Form
         method="post"
         encType="multipart/form-data"
@@ -149,6 +154,13 @@ function TranscriptionForm({kind}: {kind: 'audio' | 'video'}) {
           </button>
         </div>
       </Form>
+      {!isSubmitting && data ? (
+        hasError(data) ? (
+          <FormError statusCode={data.error} />
+        ) : (
+          <FormResult kind={kind} file={file} data={data} />
+        )
+      ) : null}
     </>
   )
 }

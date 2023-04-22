@@ -1,4 +1,5 @@
 export {DiarizationInput} from './DiarizationInput'
+export {FormResult} from './FormResult'
 export {LanguageInput} from './LanguageInput'
 export {MediaInput} from './MediaInput'
 export type {MediaFile} from './MediaInput'
