@@ -2,7 +2,7 @@ import {Injectable, UnauthorizedException} from '@nestjs/common'
 import {UsersService} from '../users/users.service'
 import * as bcrypt from 'bcrypt'
 import {JwtService} from '@nestjs/jwt'
-import {type User} from '@prisma/client'
+import {type User} from '@gladia/db'
 
 @Injectable()
 export class AuthService {

@@ -1,8 +1,6 @@
 {
   "extends": "@gladia/tsconfig/node.json",
   "compilerOptions": {
-    "module": "NodeNext",
-    "outDir": "./dist",
-    "baseUrl": "./"
+    "outDir": "./dist"
   }
 }

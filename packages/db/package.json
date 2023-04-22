@@ -1,5 +1,5 @@
 {
-  "name": "@gladia/sdk",
+  "name": "@gladia/db",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -12,16 +12,15 @@
     }
   },
   "scripts": {
-    "dev": "pnpm build & nx watch --projects=@gladia/api --includeDependencies -- pnpm build",
-    "build": "zx ./scripts/generate-sdk.mjs"
+    "db:generate": "prisma generate",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean"
   },
   "dependencies": {
-    "@gladia/api": "workspace:*"
+    "@prisma/client": "4.13.0"
   },
   "devDependencies": {
     "@gladia/tsconfig": "workspace:*",
-    "openapi-typescript-codegen": "^0.24.0",
-    "tsup": "^6.7.0",
-    "zx": "^7.2.1"
+    "prisma": "^4.13.0",
+    "tsup": "^6.7.0"
   }
 }

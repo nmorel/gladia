@@ -1,18 +1,12 @@
 import {NestFactory} from '@nestjs/core'
 import {buildOpenApiDocument} from '../src/swagger'
 import {AppModule} from 'src/app.module'
-import {join} from 'node:path'
 import {writeFile} from 'node:fs/promises'
 
-async function generate() {
+async function generate(destFile: string) {
   const app = await NestFactory.create(AppModule)
   const document = buildOpenApiDocument(app)
-  await writeFile(
-    join(__dirname, '../../../packages/sdk/api.json'),
-    JSON.stringify(document, null, 2),
-    'utf-8'
-  )
-  console.log('Schema written')
+  await writeFile(destFile, JSON.stringify(document, null, 2), 'utf-8')
+  console.log(`Schema written to ${destFile}`)
 }
-
-generate()
+generate(process.argv[process.argv.length - 1])
