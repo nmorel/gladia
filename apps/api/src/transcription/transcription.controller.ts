@@ -11,7 +11,7 @@ import {
 import {FileInterceptor} from '@nestjs/platform-express'
 import {ApiConsumes, ApiCreatedResponse, ApiHeaders, ApiOperation, ApiTags} from '@nestjs/swagger'
 import {AuthGuard} from 'src/auth/auth.guard'
-import {AudioToTextDto, TranscriptionResponseDto} from './transcription.dto'
+import {AudioToTextDto, TranscriptionResponseDto, VideoToTextDto} from './transcription.dto'
 import {TranscriptionService} from './transcription.service'
 
 @Controller('transcription')
@@ -43,7 +43,7 @@ export class TranscriptionController {
   @ApiConsumes('multipart/form-data')
   @ApiCreatedResponse({type: TranscriptionResponseDto})
   videoToText(
-    @Body() body: AudioToTextDto,
+    @Body() body: VideoToTextDto,
     @UploadedFile() video?: Express.Multer.File
   ): Promise<TranscriptionResponseDto> {
     return this.transcriptionService.videoToText({

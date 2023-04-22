@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type {AudioToTextDto} from '../models/AudioToTextDto'
 import type {TranscriptionResponseDto} from '../models/TranscriptionResponseDto'
+import type {VideoToTextDto} from '../models/VideoToTextDto'
 
 import type {CancelablePromise} from '../core/CancelablePromise'
 import type {BaseHttpRequest} from '../core/BaseHttpRequest'
@@ -47,7 +48,7 @@ export class TranscriptionService {
      * Bearer token
      */
     authorization: string
-    formData: AudioToTextDto
+    formData: VideoToTextDto
   }): CancelablePromise<TranscriptionResponseDto> {
     return this.httpRequest.request({
       method: 'POST',

@@ -55,7 +55,6 @@ export class TranscriptionService {
       return {plain: text}
     } else {
       const json = await response.json()
-      console.log(JSON.stringify(json, null, 2))
       return {
         [data.output_format]: json.prediction,
         prediction_raw: json.prediction_raw,

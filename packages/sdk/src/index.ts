@@ -15,6 +15,7 @@ export type {SignInDto} from './models/SignInDto'
 export type {SignInUpResponseDto} from './models/SignInUpResponseDto'
 export type {SignUpDto} from './models/SignUpDto'
 export type {TranscriptionResponseDto} from './models/TranscriptionResponseDto'
+export type {VideoToTextDto} from './models/VideoToTextDto'
 
 export {AuthService} from './services/AuthService'
 export {ProfileService} from './services/ProfileService'

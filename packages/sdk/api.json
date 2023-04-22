@@ -205,7 +205,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/AudioToTextDto"
+                "$ref": "#/components/schemas/VideoToTextDto"
               }
             }
           }
@@ -935,6 +935,284 @@
             }
           }
         }
+      },
+      "VideoToTextDto": {
+        "type": "object",
+        "properties": {
+          "video": {
+            "nullable": true,
+            "type": "string",
+            "format": "binary"
+          },
+          "language_behaviour": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "automatic single language",
+              "automatic multiple languages"
+            ]
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "afrikaans",
+              "albanian",
+              "amharic",
+              "arabic",
+              "armenian",
+              "assamese",
+              "azerbaijani",
+              "bashkir",
+              "basque",
+              "belarusian",
+              "bengali",
+              "bosnian",
+              "breton",
+              "bulgarian",
+              "catalan",
+              "chinese",
+              "croatian",
+              "czech",
+              "danish",
+              "dutch",
+              "english",
+              "estonian",
+              "faroese",
+              "finnish",
+              "french",
+              "galician",
+              "georgian",
+              "german",
+              "greek",
+              "gujarati",
+              "haitian creole",
+              "hausa",
+              "hawaiian",
+              "hebrew",
+              "hindi",
+              "hungarian",
+              "icelandic",
+              "indonesian",
+              "italian",
+              "japanese",
+              "javanese",
+              "kannada",
+              "kazakh",
+              "khmer",
+              "korean",
+              "lao",
+              "latin",
+              "latvian",
+              "lingala",
+              "lithuanian",
+              "luxembourgish",
+              "macedonian",
+              "malagasy",
+              "malay",
+              "malayalam",
+              "maltese",
+              "maori",
+              "marathi",
+              "mongolian",
+              "myanmar",
+              "nepali",
+              "norwegian",
+              "nynorsk",
+              "occitan",
+              "pashto",
+              "persian",
+              "polish",
+              "portuguese",
+              "punjabi",
+              "romanian",
+              "russian",
+              "sanskrit",
+              "serbian",
+              "shona",
+              "sindhi",
+              "sinhala",
+              "slovak",
+              "slovenian",
+              "somali",
+              "spanish",
+              "sundanese",
+              "swahili",
+              "swedish",
+              "tagalog",
+              "tajik",
+              "tamil",
+              "tatar",
+              "telugu",
+              "thai",
+              "tibetan",
+              "turkish",
+              "turkmen",
+              "ukrainian",
+              "urdu",
+              "uzbek",
+              "vietnamese",
+              "welsh",
+              "wolof",
+              "yiddish",
+              "yoruba"
+            ]
+          },
+          "toggle_noise_reduction": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "transcription_hint": {
+            "type": "string"
+          },
+          "toggle_diarization": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "diarization_max_speakers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10
+          },
+          "toggle_direct_translate": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "target_translation_language": {
+            "type": "string",
+            "enum": [
+              "afrikaans",
+              "albanian",
+              "amharic",
+              "arabic",
+              "armenian",
+              "assamese",
+              "azerbaijani",
+              "bashkir",
+              "basque",
+              "belarusian",
+              "bengali",
+              "bosnian",
+              "breton",
+              "bulgarian",
+              "catalan",
+              "chinese",
+              "croatian",
+              "czech",
+              "danish",
+              "dutch",
+              "english",
+              "estonian",
+              "faroese",
+              "finnish",
+              "french",
+              "galician",
+              "georgian",
+              "german",
+              "greek",
+              "gujarati",
+              "haitian creole",
+              "hausa",
+              "hawaiian",
+              "hebrew",
+              "hindi",
+              "hungarian",
+              "icelandic",
+              "indonesian",
+              "italian",
+              "japanese",
+              "javanese",
+              "kannada",
+              "kazakh",
+              "khmer",
+              "korean",
+              "lao",
+              "latin",
+              "latvian",
+              "lingala",
+              "lithuanian",
+              "luxembourgish",
+              "macedonian",
+              "malagasy",
+              "malay",
+              "malayalam",
+              "maltese",
+              "maori",
+              "marathi",
+              "mongolian",
+              "myanmar",
+              "nepali",
+              "norwegian",
+              "nynorsk",
+              "occitan",
+              "pashto",
+              "persian",
+              "polish",
+              "portuguese",
+              "punjabi",
+              "romanian",
+              "russian",
+              "sanskrit",
+              "serbian",
+              "shona",
+              "sindhi",
+              "sinhala",
+              "slovak",
+              "slovenian",
+              "somali",
+              "spanish",
+              "sundanese",
+              "swahili",
+              "swedish",
+              "tagalog",
+              "tajik",
+              "tamil",
+              "tatar",
+              "telugu",
+              "thai",
+              "tibetan",
+              "turkish",
+              "turkmen",
+              "ukrainian",
+              "urdu",
+              "uzbek",
+              "vietnamese",
+              "welsh",
+              "wolof",
+              "yiddish",
+              "yoruba"
+            ]
+          },
+          "toggle_text_emotion_recognition": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "toggle_summarization": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "toggle_chapterization": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "output_format": {
+            "type": "string",
+            "enum": [
+              "json",
+              "srt",
+              "vtt",
+              "txt",
+              "plain"
+            ]
+          },
+          "video_url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "language_behaviour",
+          "output_format"
+        ]
       }
     }
   }

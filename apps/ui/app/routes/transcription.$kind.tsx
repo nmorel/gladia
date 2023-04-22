@@ -6,7 +6,7 @@ import {
   OUTPUT_FORMATS,
   VideoToText,
 } from '@gladia/zod-types'
-import type {ActionFunction} from '@remix-run/node'
+import type {ActionArgs, ActionFunction, SerializeFrom} from '@remix-run/node'
 import {Form, useActionData, useNavigation, useParams} from '@remix-run/react'
 import type {z} from 'zod'
 import {apiClient} from '~/api.server'
@@ -19,9 +19,10 @@ import {
   TextInput,
   UrlInput,
 } from '~/components/form'
+import {Tabs} from '~/components/transcription'
 import {userTokenCookie} from '~/cookies.server'
 
-export const action: ActionFunction = async ({request, params: {kind = 'audio'}}) => {
+export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) => {
   const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))
 
   const formPayload = Object.fromEntries(await request.formData())
@@ -64,19 +65,22 @@ export const action: ActionFunction = async ({request, params: {kind = 'audio'}}
   return response
 }
 
+function hasError(data: any): data is {error: number} {
+  return !!data && 'error' in data
+}
+
 export default function Transcription() {
   const transition = useNavigation()
   const isSubmitting = transition.state !== 'idle'
-  const data = useActionData()
+  const data = useActionData<typeof action>()
 
   const {kind} = useParams<{kind: 'audio' | 'video'}>()
   if (!kind) return null
 
-  console.log(data)
-
   return (
     <>
-      {!!data?.error && <FormError statusCode={data.error} />}
+      {hasError(data) && <FormError statusCode={data.error} />}
+      <Tabs kind={kind} />
       <Form
         method="post"
         encType="multipart/form-data"
