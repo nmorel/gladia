@@ -24,6 +24,9 @@ importers:
       '@anatine/zod-nestjs':
         specifier: ^1.9.2
         version: 1.9.2(@nestjs/common@9.4.0)(@nestjs/swagger@6.3.0)(openapi3-ts@3.2.0)(ts-deepmerge@4.0.0)(zod@3.21.4)
+      '@gladia/zod-types':
+        specifier: workspace:*
+        version: link:../../packages/zod-types
       '@nestjs/common':
         specifier: ^9.4.0
         version: 9.4.0(reflect-metadata@0.1.13)(rxjs@7.8.0)
@@ -133,6 +136,9 @@ importers:
       '@gladia/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
+      '@gladia/zod-types':
+        specifier: workspace:*
+        version: link:../../packages/zod-types
       '@remix-run/express':
         specifier: ^1.15.0
         version: 1.15.0(express@4.18.2)
@@ -252,6 +258,19 @@ importers:
       openapi-typescript-codegen:
         specifier: ^0.24.0
         version: 0.24.0
+      tsup:
+        specifier: ^6.7.0
+        version: 6.7.0
+
+  packages/zod-types:
+    dependencies:
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@gladia/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       tsup:
         specifier: ^6.7.0
         version: 6.7.0

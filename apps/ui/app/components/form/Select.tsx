@@ -1,7 +1,7 @@
 type SelectProps = JSX.IntrinsicElements['select'] & {
   label: string
   name: string
-  options: {value: string; label?: string}[]
+  options: Record<string, string>
 }
 
 export function Select({label, className, options, ...props}: SelectProps) {
@@ -12,9 +12,9 @@ export function Select({label, className, options, ...props}: SelectProps) {
         <span className="label-text">{label}</span>
       </label>
       <select {...props} id={id} className={`select select-accent ${className || ''}`}>
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label ?? opt.value}
+        {Object.entries(options).map(([label, value]) => (
+          <option key={value} value={value}>
+            {label}
           </option>
         ))}
       </select>

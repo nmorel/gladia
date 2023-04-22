@@ -1,8 +1,9 @@
+import {SignIn} from '@gladia/zod-types'
 import type {ActionFunction, LoaderFunction} from '@remix-run/node'
 import {redirect} from '@remix-run/node'
 import {type V2_MetaFunction} from '@remix-run/node'
 import {Form, Link, useActionData, useNavigation} from '@remix-run/react'
-import {z} from 'zod'
+import type {z} from 'zod'
 import {apiClient, parseApiError} from '~/api.server'
 import {EmailInput, FormError, PasswordInput} from '~/components/form'
 import {userTokenCookie} from '~/cookies.server'
@@ -21,15 +22,11 @@ export const loader: LoaderFunction = async ({request}) => {
 }
 
 export const action: ActionFunction = async ({request}) => {
-  const formPayload = Object.fromEntries(await request.formData())
-  const signInSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-  })
+  const formData = Object.fromEntries(await request.formData())
 
-  let signInPayload: z.infer<typeof signInSchema>
+  let signInPayload: z.infer<typeof SignIn>
   try {
-    signInPayload = signInSchema.parse(formPayload)
+    signInPayload = SignIn.parse(formData)
   } catch (err) {
     return {error: 400}
   }

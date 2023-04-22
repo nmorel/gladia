@@ -1,8 +1,9 @@
+import {SignUp} from '@gladia/zod-types'
 import type {ActionFunction, LoaderFunction} from '@remix-run/node'
 import {redirect} from '@remix-run/node'
 import {type V2_MetaFunction} from '@remix-run/node'
 import {Form, Link, useActionData, useNavigation} from '@remix-run/react'
-import {z} from 'zod'
+import type {z} from 'zod'
 import {apiClient, parseApiError} from '~/api.server'
 import {EmailInput, FormError, PasswordInput, TextInput} from '~/components/form'
 import {userTokenCookie} from '~/cookies.server'
@@ -21,16 +22,11 @@ export const loader: LoaderFunction = async ({request}) => {
 }
 
 export const action: ActionFunction = async ({request}) => {
-  const formPayload = Object.fromEntries(await request.formData())
-  const signUpSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-    name: z.string(),
-  })
+  const formData = Object.fromEntries(await request.formData())
 
-  let signUpPayload: z.infer<typeof signUpSchema>
+  let signUpPayload: z.infer<typeof SignUp>
   try {
-    signUpPayload = signUpSchema.parse(formPayload)
+    signUpPayload = SignUp.parse(formData)
   } catch (err) {
     return {error: 400}
   }

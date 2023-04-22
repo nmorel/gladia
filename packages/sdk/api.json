@@ -170,7 +170,56 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranscriptionResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "transcription"
+        ]
+      }
+    },
+    "/transcription/video-to-text": {
+      "post": {
+        "operationId": "video-to-text",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AudioToTextDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranscriptionResponseDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -263,16 +312,418 @@
         "type": "object",
         "properties": {
           "audio": {
+            "nullable": true,
             "type": "string",
             "format": "binary"
           },
+          "language_behaviour": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "automatic single language",
+              "automatic multiple languages"
+            ]
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "afrikaans",
+              "albanian",
+              "amharic",
+              "arabic",
+              "armenian",
+              "assamese",
+              "azerbaijani",
+              "bashkir",
+              "basque",
+              "belarusian",
+              "bengali",
+              "bosnian",
+              "breton",
+              "bulgarian",
+              "catalan",
+              "chinese",
+              "croatian",
+              "czech",
+              "danish",
+              "dutch",
+              "english",
+              "estonian",
+              "faroese",
+              "finnish",
+              "french",
+              "galician",
+              "georgian",
+              "german",
+              "greek",
+              "gujarati",
+              "haitian creole",
+              "hausa",
+              "hawaiian",
+              "hebrew",
+              "hindi",
+              "hungarian",
+              "icelandic",
+              "indonesian",
+              "italian",
+              "japanese",
+              "javanese",
+              "kannada",
+              "kazakh",
+              "khmer",
+              "korean",
+              "lao",
+              "latin",
+              "latvian",
+              "lingala",
+              "lithuanian",
+              "luxembourgish",
+              "macedonian",
+              "malagasy",
+              "malay",
+              "malayalam",
+              "maltese",
+              "maori",
+              "marathi",
+              "mongolian",
+              "myanmar",
+              "nepali",
+              "norwegian",
+              "nynorsk",
+              "occitan",
+              "pashto",
+              "persian",
+              "polish",
+              "portuguese",
+              "punjabi",
+              "romanian",
+              "russian",
+              "sanskrit",
+              "serbian",
+              "shona",
+              "sindhi",
+              "sinhala",
+              "slovak",
+              "slovenian",
+              "somali",
+              "spanish",
+              "sundanese",
+              "swahili",
+              "swedish",
+              "tagalog",
+              "tajik",
+              "tamil",
+              "tatar",
+              "telugu",
+              "thai",
+              "tibetan",
+              "turkish",
+              "turkmen",
+              "ukrainian",
+              "urdu",
+              "uzbek",
+              "vietnamese",
+              "welsh",
+              "wolof",
+              "yiddish",
+              "yoruba"
+            ]
+          },
           "toggle_noise_reduction": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
+          },
+          "transcription_hint": {
+            "type": "string"
+          },
+          "toggle_diarization": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "diarization_max_speakers": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 10
+          },
+          "toggle_direct_translate": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "target_translation_language": {
+            "type": "string",
+            "enum": [
+              "afrikaans",
+              "albanian",
+              "amharic",
+              "arabic",
+              "armenian",
+              "assamese",
+              "azerbaijani",
+              "bashkir",
+              "basque",
+              "belarusian",
+              "bengali",
+              "bosnian",
+              "breton",
+              "bulgarian",
+              "catalan",
+              "chinese",
+              "croatian",
+              "czech",
+              "danish",
+              "dutch",
+              "english",
+              "estonian",
+              "faroese",
+              "finnish",
+              "french",
+              "galician",
+              "georgian",
+              "german",
+              "greek",
+              "gujarati",
+              "haitian creole",
+              "hausa",
+              "hawaiian",
+              "hebrew",
+              "hindi",
+              "hungarian",
+              "icelandic",
+              "indonesian",
+              "italian",
+              "japanese",
+              "javanese",
+              "kannada",
+              "kazakh",
+              "khmer",
+              "korean",
+              "lao",
+              "latin",
+              "latvian",
+              "lingala",
+              "lithuanian",
+              "luxembourgish",
+              "macedonian",
+              "malagasy",
+              "malay",
+              "malayalam",
+              "maltese",
+              "maori",
+              "marathi",
+              "mongolian",
+              "myanmar",
+              "nepali",
+              "norwegian",
+              "nynorsk",
+              "occitan",
+              "pashto",
+              "persian",
+              "polish",
+              "portuguese",
+              "punjabi",
+              "romanian",
+              "russian",
+              "sanskrit",
+              "serbian",
+              "shona",
+              "sindhi",
+              "sinhala",
+              "slovak",
+              "slovenian",
+              "somali",
+              "spanish",
+              "sundanese",
+              "swahili",
+              "swedish",
+              "tagalog",
+              "tajik",
+              "tamil",
+              "tatar",
+              "telugu",
+              "thai",
+              "tibetan",
+              "turkish",
+              "turkmen",
+              "ukrainian",
+              "urdu",
+              "uzbek",
+              "vietnamese",
+              "welsh",
+              "wolof",
+              "yiddish",
+              "yoruba"
+            ]
+          },
+          "toggle_text_emotion_recognition": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "toggle_summarization": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "toggle_chapterization": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "output_format": {
+            "type": "string",
+            "enum": [
+              "json",
+              "srt",
+              "vtt",
+              "txt",
+              "plain"
+            ]
+          },
+          "audio_url": {
+            "type": "string",
+            "format": "uri"
           }
         },
         "required": [
-          "audio"
+          "language_behaviour",
+          "output_format"
         ]
+      },
+      "TranscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "json": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "channel": {
+                  "type": "string"
+                },
+                "original_language": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string"
+                },
+                "speaker": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "not_activated"
+                      ]
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "emotion": {
+                  "type": "string"
+                },
+                "time_begin": {
+                  "type": "number"
+                },
+                "time_end": {
+                  "type": "number"
+                },
+                "transcription": {
+                  "type": "string"
+                },
+                "words": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "confidence": {
+                        "type": "number"
+                      },
+                      "word": {
+                        "type": "string"
+                      },
+                      "time_begin": {
+                        "type": "number"
+                      },
+                      "time_end": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "confidence",
+                      "word",
+                      "time_begin",
+                      "time_end"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "channel",
+                "language",
+                "speaker",
+                "time_begin",
+                "time_end",
+                "transcription",
+                "words"
+              ]
+            }
+          },
+          "srt": {
+            "type": "string"
+          },
+          "vtt": {
+            "type": "string"
+          },
+          "txt": {
+            "type": "string"
+          },
+          "plain": {
+            "type": "string"
+          },
+          "prediction_raw": {
+            "type": "object",
+            "properties": {
+              "metadata": {
+                "type": "object",
+                "properties": {}
+              },
+              "transcription": {
+                "type": "string"
+              },
+              "chapterization": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "not_activated"
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {}
+                    }
+                  }
+                ]
+              },
+              "summarization": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "not_activated"
+                    ]
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "emotion": {
+                "type": "string"
+              }
+            }
+          }
+        }
       }
     }
   }

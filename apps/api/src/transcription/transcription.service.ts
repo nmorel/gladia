@@ -1,19 +1,43 @@
-import {Injectable} from '@nestjs/common'
+import {Injectable, InternalServerErrorException} from '@nestjs/common'
+import {AudioToText, Transcription, VideoToText} from '@gladia/zod-types'
+import {z} from 'zod'
+
+function isFile(
+  value: string | number | boolean | Express.Multer.File
+): value is Express.Multer.File {
+  return typeof value === 'object'
+}
 
 @Injectable()
 export class TranscriptionService {
-  async audioToText(data: {audio: Express.Multer.File}) {
+  audioToText(data: Omit<z.infer<typeof AudioToText>, 'audio'> & {audio?: Express.Multer.File}) {
+    return this.mediaToText('audio', data)
+  }
+
+  videoToText(data: Omit<z.infer<typeof VideoToText>, 'video'> & {video?: Express.Multer.File}) {
+    return this.mediaToText('video', data)
+  }
+
+  async mediaToText(
+    kind: 'audio' | 'video',
+    data:
+      | (Omit<z.infer<typeof AudioToText>, 'audio'> & {audio?: Express.Multer.File})
+      | (Omit<z.infer<typeof VideoToText>, 'video'> & {video?: Express.Multer.File})
+  ): Promise<z.infer<typeof Transcription>> {
     const formData = new FormData()
     Object.entries(data).forEach(([key, value]) => {
-      if (key === 'audio') {
+      if (value === undefined) {
+        return
+      }
+
+      if (isFile(value)) {
         formData.set(key, new Blob([value.buffer]), value.filename)
       } else {
-        // @ts-ignore
-        formData.set(key, value)
+        formData.set(key, `${value}`)
       }
     })
     const response = await fetch(
-      `https://api.gladia.io/audio/text/audio-transcription/?model=large-v2`,
+      `https://api.gladia.io/${kind}/text/${kind}-transcription/?model=large-v2`,
       {
         method: 'POST',
         headers: {
@@ -22,12 +46,20 @@ export class TranscriptionService {
         body: formData,
       }
     )
-    console.log(response)
-    const result = await response.text()
-    console.log(result)
-    return result
-  }
-  async videoToText() {
-    return null
+    if (!response.ok) {
+      console.error(`Error during transcription: [${response.status}] ${response.statusText}`)
+      throw new InternalServerErrorException()
+    }
+    if (data.output_format === 'plain') {
+      const text = await response.text()
+      return {plain: text}
+    } else {
+      const json = await response.json()
+      console.log(JSON.stringify(json, null, 2))
+      return {
+        [data.output_format]: json.prediction,
+        prediction_raw: json.prediction_raw,
+      }
+    }
   }
 }

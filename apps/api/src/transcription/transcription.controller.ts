@@ -11,7 +11,7 @@ import {
 import {FileInterceptor} from '@nestjs/platform-express'
 import {ApiConsumes, ApiCreatedResponse, ApiHeaders, ApiOperation, ApiTags} from '@nestjs/swagger'
 import {AuthGuard} from 'src/auth/auth.guard'
-import {AudioToTextDto} from './transcription.dto'
+import {AudioToTextDto, TranscriptionResponseDto} from './transcription.dto'
 import {TranscriptionService} from './transcription.service'
 
 @Controller('transcription')
@@ -26,18 +26,29 @@ export class TranscriptionController {
   @UseInterceptors(FileInterceptor('audio'))
   @ApiOperation({operationId: 'audio-to-text'})
   @ApiConsumes('multipart/form-data')
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({type: TranscriptionResponseDto})
   audioToText(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() body: AudioToTextDto
-  ): Promise<void> {
-    console.log(file)
-    // @ts-ignore
+    @Body() body: AudioToTextDto,
+    @UploadedFile() audio?: Express.Multer.File
+  ): Promise<TranscriptionResponseDto> {
     return this.transcriptionService.audioToText({
       ...body,
-      // audio: file,
-      // @ts-ignore
-      audio_url: 'http://files.gladia.io/example/audio-transcription/split_infinity.wav',
+      audio,
+    })
+  }
+
+  @Post('video-to-text')
+  @UseInterceptors(FileInterceptor('video'))
+  @ApiOperation({operationId: 'video-to-text'})
+  @ApiConsumes('multipart/form-data')
+  @ApiCreatedResponse({type: TranscriptionResponseDto})
+  videoToText(
+    @Body() body: AudioToTextDto,
+    @UploadedFile() video?: Express.Multer.File
+  ): Promise<TranscriptionResponseDto> {
+    return this.transcriptionService.videoToText({
+      ...body,
+      video,
     })
   }
 }

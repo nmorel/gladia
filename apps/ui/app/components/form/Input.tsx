@@ -19,6 +19,10 @@ export function TextInput(props: Omit<InputProps, 'type'>) {
   return <Input {...props} type="text" />
 }
 
+export function UrlInput(props: Omit<InputProps, 'type'>) {
+  return <Input {...props} type="url" />
+}
+
 export function EmailInput(props: Omit<InputProps, 'type' | 'autoComplete'>) {
   return <Input {...props} type="email" autoComplete="username" />
 }

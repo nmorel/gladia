@@ -1,17 +1,15 @@
 import {createZodDto} from '@anatine/zod-nestjs'
+import {AudioToText, Transcription, VideoToText} from '@gladia/zod-types'
 import {ApiProperty} from '@nestjs/swagger'
-import {z} from 'zod'
 
-const AudioOrVideoToText = z.object({
-  toggle_noise_reduction: z.coerce.boolean().optional(),
-})
-
-export class AudioToTextDto extends createZodDto(AudioOrVideoToText) {
-  @ApiProperty({type: 'string', format: 'binary', required: true})
+export class AudioToTextDto extends createZodDto(AudioToText) {
+  @ApiProperty({type: 'string', format: 'binary', required: false})
   audio: Express.Multer.File
 }
 
-export class VideoToTextDto extends createZodDto(AudioOrVideoToText) {
-  @ApiProperty({type: 'string', format: 'binary', required: true})
+export class VideoToTextDto extends createZodDto(VideoToText) {
+  @ApiProperty({type: 'string', format: 'binary', required: false})
   video: Express.Multer.File
 }
+
+export class TranscriptionResponseDto extends createZodDto(Transcription) {}

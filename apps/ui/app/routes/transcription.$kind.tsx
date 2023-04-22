@@ -1,20 +1,67 @@
+import type {TranscriptionResponseDto} from '@gladia/sdk'
+import {
+  AudioToText,
+  LANGUAGES,
+  LANGUAGE_BEHAVIOURS,
+  OUTPUT_FORMATS,
+  VideoToText,
+} from '@gladia/zod-types'
 import type {ActionFunction} from '@remix-run/node'
 import {Form, useActionData, useNavigation, useParams} from '@remix-run/react'
+import type {z} from 'zod'
 import {apiClient} from '~/api.server'
-import {Checkbox, FileInput, FormError, NumberInput, Select, TextInput} from '~/components/form'
+import {
+  Checkbox,
+  FileInput,
+  FormError,
+  NumberInput,
+  Select,
+  TextInput,
+  UrlInput,
+} from '~/components/form'
 import {userTokenCookie} from '~/cookies.server'
 
-export const action: ActionFunction = async ({request}) => {
+export const action: ActionFunction = async ({request, params: {kind = 'audio'}}) => {
   const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))
 
-  const formData = await request.formData()
+  const formPayload = Object.fromEntries(await request.formData())
 
-  const response = await apiClient.transcription.audioToText({
-    authorization: `Bearer ${userToken}`,
-    formData: Object.fromEntries(formData) as any,
-  })
-  console.log(Object.fromEntries(formData), response)
-  return null
+  let response: TranscriptionResponseDto
+  switch (kind) {
+    case 'audio': {
+      let payload: z.infer<typeof AudioToText>
+      try {
+        payload = AudioToText.parse(formPayload)
+      } catch (err) {
+        console.log(err)
+        return {error: 400}
+      }
+
+      response = await apiClient.transcription.audioToText({
+        authorization: `Bearer ${userToken}`,
+        formData: payload,
+      })
+      break
+    }
+    case 'video': {
+      let payload: z.infer<typeof VideoToText>
+      try {
+        payload = VideoToText.parse(formPayload)
+      } catch (err) {
+        return {error: 400}
+      }
+
+      response = await apiClient.transcription.videoToText({
+        authorization: `Bearer ${userToken}`,
+        formData: payload,
+      })
+      break
+    }
+    default: {
+      return {error: 400}
+    }
+  }
+  return response
 }
 
 export default function Transcription() {
@@ -24,6 +71,8 @@ export default function Transcription() {
 
   const {kind} = useParams<{kind: 'audio' | 'video'}>()
   if (!kind) return null
+
+  console.log(data?.json)
 
   return (
     <>
@@ -42,23 +91,36 @@ export default function Transcription() {
           label={`Select your ${kind} file:`}
           name={kind}
           accept={`${kind}/*`}
-          required
+          disabled={isSubmitting}
+        />
+        <UrlInput
+          label={`Or paste an url to the ${kind} file:`}
+          name={`${kind}_url`}
+          defaultValue={
+            kind === 'audio'
+              ? 'http://files.gladia.io/example/audio-transcription/split_infinity.wav'
+              : 'http://files.gladia.io/example/video-transcription/short-video.mp4'
+          }
           disabled={isSubmitting}
         />
 
         <Select
           label="Language behaviour"
           name="language_behaviour"
-          options={[
-            {value: 'manual', label: 'Manual'},
-            {value: 'automatic single language', label: 'Automatic single language'},
-            {value: 'automatic multiple languages', label: 'Automatic multiple languages'},
-          ]}
-          defaultValue="automatic single language"
+          options={LANGUAGE_BEHAVIOURS}
+          defaultValue={LANGUAGE_BEHAVIOURS['Automatic single language']}
+          required
           disabled={isSubmitting}
         />
 
-        {/* TODO add language select if manual is selected above */}
+        {/* TODO show language select only if manual is selected above */}
+        <Select
+          label="Language"
+          name="language"
+          options={LANGUAGES}
+          defaultValue={LANGUAGES['English']}
+          disabled={isSubmitting}
+        />
 
         <Checkbox
           label="Toggle noise reduction"
@@ -93,23 +155,14 @@ export default function Transcription() {
           disabled={isSubmitting}
         />
 
-        {/* TODO add language select if direct translate is selected */}
-        {/* <div className="form-control">
-          <label className="cursor-pointer label font-semibold" htmlFor="target_translation_language">
-            <span className="label-text">Target translation language</span>
-          </label>
-          <select
-            id="target_translation_language"
-            name="target_translation_language"
-            className="select select-accent"
-            defaultValue="english"
-            disabled={isSubmitting}
-          >
-            <option value="manual">Manual</option>
-            <option value="automatic single language">Automatic single language</option>
-            <option value="automatic multiple languages">Automatic multiple languages</option>
-          </select>
-        </div> */}
+        {/* TODO show language select if direct translate is selected */}
+        <Select
+          label="Target translation language"
+          name="target_translation_language"
+          options={LANGUAGES}
+          defaultValue={LANGUAGES['English']}
+          disabled={isSubmitting}
+        />
 
         <Checkbox
           label="Toggle text emotion recognition"
@@ -132,14 +185,8 @@ export default function Transcription() {
         <Select
           label="Output format"
           name="output_format"
-          options={[
-            {value: 'json', label: 'Json'},
-            {value: 'srt', label: 'Srt'},
-            {value: 'vtt', label: 'Vtt'},
-            {value: 'txt', label: 'Txt'},
-            {value: 'plain', label: 'Plain'},
-          ]}
-          defaultValue="json"
+          options={OUTPUT_FORMATS}
+          defaultValue={OUTPUT_FORMATS['Json']}
           required
           disabled={isSubmitting}
         />

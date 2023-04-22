@@ -14,6 +14,7 @@ export type {GetProfileResponseDto} from './models/GetProfileResponseDto'
 export type {SignInDto} from './models/SignInDto'
 export type {SignInUpResponseDto} from './models/SignInUpResponseDto'
 export type {SignUpDto} from './models/SignUpDto'
+export type {TranscriptionResponseDto} from './models/TranscriptionResponseDto'
 
 export {AuthService} from './services/AuthService'
 export {ProfileService} from './services/ProfileService'
