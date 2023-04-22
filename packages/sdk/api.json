@@ -683,10 +683,128 @@
             "properties": {
               "metadata": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "audioConversionTime": {
+                    "type": "number"
+                  },
+                  "chapterizationTime": {
+                    "type": "number"
+                  },
+                  "diarizationTime": {
+                    "type": "number"
+                  },
+                  "emotionTime": {
+                    "type": "number"
+                  },
+                  "summarizationTime": {
+                    "type": "number"
+                  },
+                  "inferenceTime": {
+                    "type": "number"
+                  },
+                  "totalTranscriptionTime": {
+                    "type": "number"
+                  },
+                  "total_speech_duration": {
+                    "type": "number"
+                  },
+                  "translation_time": {
+                    "type": "number"
+                  },
+                  "vadTime": {
+                    "type": "number"
+                  },
+                  "nbSilentChannels": {
+                    "type": "number"
+                  },
+                  "nbSimilarChannels": {
+                    "type": "number"
+                  }
+                }
               },
               "transcription": {
-                "type": "string"
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "channel": {
+                          "type": "string"
+                        },
+                        "original_language": {
+                          "type": "string"
+                        },
+                        "language": {
+                          "type": "string"
+                        },
+                        "speaker": {
+                          "oneOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "not_activated"
+                              ]
+                            },
+                            {
+                              "type": "number"
+                            }
+                          ]
+                        },
+                        "emotion": {
+                          "type": "string"
+                        },
+                        "time_begin": {
+                          "type": "number"
+                        },
+                        "time_end": {
+                          "type": "number"
+                        },
+                        "transcription": {
+                          "type": "string"
+                        },
+                        "words": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "confidence": {
+                                "type": "number"
+                              },
+                              "word": {
+                                "type": "string"
+                              },
+                              "time_begin": {
+                                "type": "number"
+                              },
+                              "time_end": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "confidence",
+                              "word",
+                              "time_begin",
+                              "time_end"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "channel",
+                        "language",
+                        "speaker",
+                        "time_begin",
+                        "time_end",
+                        "transcription",
+                        "words"
+                      ]
+                    }
+                  }
+                ]
               },
               "chapterization": {
                 "oneOf": [
@@ -700,7 +818,26 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "properties": {}
+                      "properties": {
+                        "start": {
+                          "type": "number"
+                        },
+                        "end": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "summary": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "start",
+                        "end",
+                        "title",
+                        "summary"
+                      ]
                     }
                   }
                 ]
@@ -719,7 +856,81 @@
                 ]
               },
               "emotion": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "channel": {
+                      "type": "string"
+                    },
+                    "original_language": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    },
+                    "speaker": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "not_activated"
+                          ]
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    "emotion": {
+                      "type": "string"
+                    },
+                    "time_begin": {
+                      "type": "number"
+                    },
+                    "time_end": {
+                      "type": "number"
+                    },
+                    "transcription": {
+                      "type": "string"
+                    },
+                    "words": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "confidence": {
+                            "type": "number"
+                          },
+                          "word": {
+                            "type": "string"
+                          },
+                          "time_begin": {
+                            "type": "number"
+                          },
+                          "time_end": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "confidence",
+                          "word",
+                          "time_begin",
+                          "time_end"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "channel",
+                    "language",
+                    "speaker",
+                    "time_begin",
+                    "time_end",
+                    "transcription",
+                    "words"
+                  ]
+                }
               }
             }
           }

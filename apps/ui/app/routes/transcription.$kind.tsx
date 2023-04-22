@@ -72,7 +72,7 @@ export default function Transcription() {
   const {kind} = useParams<{kind: 'audio' | 'video'}>()
   if (!kind) return null
 
-  console.log(data?.json)
+  console.log(data)
 
   return (
     <>

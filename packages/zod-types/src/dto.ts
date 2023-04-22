@@ -67,40 +67,62 @@ export const VideoToText = AudioOrVideoToText.extend({
   video_url: mediaUrl.optional(),
 })
 
-export const Transcription = z.object({
-  json: z
-    .array(
+const jsonTranscription = z.array(
+  z.object({
+    channel: z.string(),
+    original_language: z.string().optional(),
+    language: z.string(),
+    speaker: z.enum(['not_activated']).or(z.number()),
+    emotion: z.string().optional(),
+    time_begin: z.number(),
+    time_end: z.number(),
+    transcription: z.string(),
+    words: z.array(
       z.object({
-        channel: z.string(),
-        original_language: z.string().optional(),
-        language: z.string(),
-        speaker: z.enum(['not_activated']).or(z.number()),
-        emotion: z.string().optional(),
+        confidence: z.number(),
+        word: z.string(),
         time_begin: z.number(),
         time_end: z.number(),
-        transcription: z.string(),
-        words: z.array(
-          z.object({
-            confidence: z.number(),
-            word: z.string(),
-            time_begin: z.number(),
-            time_end: z.number(),
-          })
-        ),
       })
-    )
-    .optional(),
+    ),
+  })
+)
+
+export const Transcription = z.object({
+  json: jsonTranscription.optional(),
   srt: z.string().optional(),
   vtt: z.string().optional(),
   txt: z.string().optional(),
   plain: z.string().optional(),
   prediction_raw: z
     .object({
-      metadata: z.object({}),
-      transcription: z.string(),
-      chapterization: z.enum(['not_activated']).or(z.array(z.object({}))),
+      metadata: z.object({
+        audioConversionTime: z.number().optional(),
+        chapterizationTime: z.number().optional(),
+        diarizationTime: z.number().optional(),
+        emotionTime: z.number().optional(),
+        summarizationTime: z.number().optional(),
+        inferenceTime: z.number().optional(),
+        totalTranscriptionTime: z.number().optional(),
+        total_speech_duration: z.number().optional(),
+        translation_time: z.number().optional(),
+        vadTime: z.number().optional(),
+        nbSilentChannels: z.number().optional(),
+        nbSimilarChannels: z.number().optional(),
+      }),
+      transcription: z.string().or(jsonTranscription),
+      chapterization: z.enum(['not_activated']).or(
+        z.array(
+          z.object({
+            start: z.number(),
+            end: z.number(),
+            title: z.string(),
+            summary: z.string(),
+          })
+        )
+      ),
       summarization: z.enum(['not_activated']).or(z.string()),
-      emotion: z.string().optional(),
+      emotion: jsonTranscription.optional(),
     })
     .optional(),
 })
