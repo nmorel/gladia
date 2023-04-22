@@ -1,25 +1,19 @@
 import type {TranscriptionResponseDto} from '@gladia/sdk'
-import {
-  AudioToText,
-  LANGUAGES,
-  LANGUAGE_BEHAVIOURS,
-  OUTPUT_FORMATS,
-  VideoToText,
-} from '@gladia/zod-types'
-import type {ActionArgs, ActionFunction, SerializeFrom} from '@remix-run/node'
+import {AudioToText, OUTPUT_FORMATS, VideoToText} from '@gladia/zod-types'
+import type {ActionArgs} from '@remix-run/node'
 import {Form, useActionData, useNavigation, useParams} from '@remix-run/react'
+import {useState} from 'react'
 import type {z} from 'zod'
 import {apiClient} from '~/api.server'
+import {Checkbox, FormError, Input, Select} from '~/components/form'
 import {
-  Checkbox,
-  FileInput,
-  FormError,
-  NumberInput,
-  Select,
-  TextInput,
-  UrlInput,
-} from '~/components/form'
-import {Tabs} from '~/components/transcription'
+  DiarizationInput,
+  LanguageInput,
+  MediaFile,
+  MediaInput,
+  Tabs,
+  TranslationInput,
+} from '~/components/transcription'
 import {userTokenCookie} from '~/cookies.server'
 
 export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) => {
@@ -70,17 +64,27 @@ function hasError(data: any): data is {error: number} {
 }
 
 export default function Transcription() {
-  const transition = useNavigation()
-  const isSubmitting = transition.state !== 'idle'
-  const data = useActionData<typeof action>()
-
   const {kind} = useParams<{kind: 'audio' | 'video'}>()
   if (!kind) return null
 
   return (
     <>
-      {hasError(data) && <FormError statusCode={data.error} />}
       <Tabs kind={kind} />
+      <TranscriptionForm key={kind} kind={kind} />
+    </>
+  )
+}
+
+function TranscriptionForm({kind}: {kind: 'audio' | 'video'}) {
+  const transition = useNavigation()
+  const isSubmitting = transition.state !== 'idle'
+  const data = useActionData<typeof action>()
+
+  const [file, setFile] = useState<MediaFile>(null)
+
+  return (
+    <>
+      {hasError(data) && <FormError statusCode={data.error} />}
       <Form
         method="post"
         encType="multipart/form-data"
@@ -91,80 +95,24 @@ export default function Transcription() {
           <span className="capitalize">{kind}</span> Transcription
         </h1>
 
-        <FileInput
-          label={`Select your ${kind} file:`}
-          name={kind}
-          accept={`${kind}/*`}
-          disabled={isSubmitting}
-        />
-        <UrlInput
-          label={`Or paste an url to the ${kind} file:`}
-          name={`${kind}_url`}
-          defaultValue={
-            kind === 'audio'
-              ? 'http://files.gladia.io/example/audio-transcription/split_infinity.wav'
-              : 'http://files.gladia.io/example/video-transcription/short-video.mp4'
-          }
+        <MediaInput kind={kind} disabled={isSubmitting} file={file} setFile={setFile} />
+
+        <Input
+          label="Transcription hint"
+          name="transcription_hint"
+          placeholder="Enter a hint"
           disabled={isSubmitting}
         />
 
-        <Select
-          label="Language behaviour"
-          name="language_behaviour"
-          options={LANGUAGE_BEHAVIOURS}
-          defaultValue={LANGUAGE_BEHAVIOURS['Automatic single language']}
-          required
-          disabled={isSubmitting}
-        />
+        <LanguageInput disabled={isSubmitting} />
 
-        {/* TODO show language select only if manual is selected above */}
-        <Select
-          label="Language"
-          name="language"
-          options={LANGUAGES}
-          defaultValue={LANGUAGES['English']}
-          disabled={isSubmitting}
-        />
+        <DiarizationInput disabled={isSubmitting} />
+
+        <TranslationInput disabled={isSubmitting} />
 
         <Checkbox
           label="Toggle noise reduction"
           name="toggle_noise_reduction"
-          disabled={isSubmitting}
-        />
-
-        <TextInput
-          label="Transcription hint"
-          name="transcription_hint"
-          placeholder="Enter a hint"
-          className="input input-accent"
-          disabled={isSubmitting}
-        />
-
-        <Checkbox label="Toggle diarization" name="toggle_diarization" disabled={isSubmitting} />
-
-        {/* TODO show input if diarization checked */}
-        <NumberInput
-          label="Diarization max speakers"
-          name="diarization_max_speakers"
-          min="2"
-          max="10"
-          step="1"
-          defaultValue="2"
-          disabled={isSubmitting}
-        />
-
-        <Checkbox
-          label="Toggle direct translate"
-          name="toggle_direct_translate"
-          disabled={isSubmitting}
-        />
-
-        {/* TODO show language select if direct translate is selected */}
-        <Select
-          label="Target translation language"
-          name="target_translation_language"
-          options={LANGUAGES}
-          defaultValue={LANGUAGES['English']}
           disabled={isSubmitting}
         />
 

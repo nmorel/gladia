@@ -4,7 +4,7 @@ import {Link, Outlet} from '@remix-run/react'
 export function ConnectedLayout({profile}: {profile: GetProfileResponseDto}) {
   return (
     <>
-      <header className="sticky top-0 h-16 bg-base-300 grid grid-cols-3 items-center px-4">
+      <header className="sticky top-0 h-16 bg-base-300 grid grid-cols-3 items-center px-4 z-10">
         <div>{/* Left zone */}</div>
         <div className="text-center text-2xl">
           <Link to="/">Gladia</Link>

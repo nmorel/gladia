@@ -1,11 +1,10 @@
 import {SignIn} from '@gladia/zod-types'
 import type {ActionFunction, LoaderFunction} from '@remix-run/node'
-import {redirect} from '@remix-run/node'
-import {type V2_MetaFunction} from '@remix-run/node'
+import {redirect, type V2_MetaFunction} from '@remix-run/node'
 import {Form, Link, useActionData, useNavigation} from '@remix-run/react'
 import type {z} from 'zod'
 import {apiClient, parseApiError} from '~/api.server'
-import {EmailInput, FormError, PasswordInput} from '~/components/form'
+import {FormError, Input} from '~/components/form'
 import {userTokenCookie} from '~/cookies.server'
 
 export const meta: V2_MetaFunction = () => {
@@ -60,7 +59,9 @@ export default function Login() {
       <Form method="post" action="/login" className="w-full flex flex-col gap-5">
         <h1 className="text-center text-3xl mt-5">Sign in to Gladia</h1>
 
-        <EmailInput
+        <Input
+          type="email"
+          autoComplete="username"
           label="Email"
           name="email"
           placeholder="Enter your email"
@@ -68,7 +69,9 @@ export default function Login() {
           disabled={isSubmitting}
         />
 
-        <PasswordInput
+        <Input
+          type="password"
+          autoComplete="current-password"
           label="Password"
           name="password"
           placeholder="Enter your password"

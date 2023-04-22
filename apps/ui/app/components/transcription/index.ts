@@ -1,1 +1,6 @@
+export {DiarizationInput} from './DiarizationInput'
+export {LanguageInput} from './LanguageInput'
+export {MediaInput} from './MediaInput'
+export type {MediaFile} from './MediaInput'
 export {Tabs} from './Tabs'
+export {TranslationInput} from './TranslationInput'
