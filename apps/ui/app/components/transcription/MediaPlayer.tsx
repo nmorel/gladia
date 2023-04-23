@@ -1,7 +1,4 @@
-import {RefCallback} from 'react'
-import {MutableRefObject} from 'react'
-import {Ref} from 'react'
-import {LegacyRef, forwardRef} from 'react'
+import {MutableRefObject, RefCallback, forwardRef} from 'react'
 
 export const MediaPlayer = forwardRef(function MediaPlayer(
   {

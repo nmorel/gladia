@@ -1,10 +1,11 @@
 import {TranscriptionResponseDto} from '@gladia/sdk'
-import {MediaFile} from './MediaInput'
-import {MediaPlayer} from './MediaPlayer'
+import type {MediaFile} from '../types'
+import {MediaPlayer} from '../MediaPlayer'
 import {useEffect, useRef, useState} from 'react'
 import {cx} from '~/helpers/classnames'
-import {JsonTree} from '../json-tree'
+import {JsonTree} from '~/components/json-tree'
 import {CopyAndDownload} from './CopyAndDownload'
+import {LiveSubtitle} from './LiveSubtitle'
 
 export function FormResult({
   kind,
@@ -19,6 +20,8 @@ export function FormResult({
   useEffect(() => {
     containerRef?.current?.scrollIntoView({behavior: 'smooth'})
   }, [])
+
+  const mediaEltRef = useRef<HTMLAudioElement | HTMLVideoElement | null>(null)
 
   const outputFormat = Object.keys(data).find((f) => f !== 'prediction_raw') as Exclude<
     keyof TranscriptionResponseDto & {},
@@ -37,7 +40,7 @@ export function FormResult({
         <label className="label font-semibold">
           <span className="label-text italic">{file.file?.name ?? file.url}</span>
         </label>
-        <MediaPlayer kind={kind} src={file.dataUrl ?? file.url} />
+        <MediaPlayer ref={mediaEltRef} kind={kind} src={file.dataUrl ?? file.url} />
       </div>
       {showTabs && (
         <div className="tabs justify-center">
@@ -83,7 +86,7 @@ export function FormResult({
             expandNode={(path, lvl) => lvl <= 2 && path[path.length - 1] !== 'metadata'}
           />
         ) : tab === 'live' ? (
-          'Live stream'
+          <LiveSubtitle data={data} property={outputFormat} mediaEltRef={mediaEltRef} />
         ) : !data[tab] ? (
           'No result'
         ) : tab === 'json' ? (

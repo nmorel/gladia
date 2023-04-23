@@ -1,4 +1,4 @@
-import {TranscriptionResponseDto} from '@gladia/sdk'
+import type {TranscriptionResponseDto} from '@gladia/sdk'
 
 export function CopyAndDownload({
   data,

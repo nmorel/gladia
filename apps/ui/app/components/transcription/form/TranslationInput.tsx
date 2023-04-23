@@ -1,6 +1,6 @@
 import {LANGUAGES} from '@gladia/zod-types'
 import {useState} from 'react'
-import {Checkbox, Select} from '../form'
+import {Checkbox, Select} from '~/components/form'
 
 export function TranslationInput({disabled}: {disabled: boolean}) {
   const [isEnabled, setIsEnabled] = useState(false)

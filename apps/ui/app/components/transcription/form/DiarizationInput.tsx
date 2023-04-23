@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {Checkbox, Input} from '../form'
+import {Checkbox, Input} from '~/components/form'
 
 export function DiarizationInput({disabled}: {disabled: boolean}) {
   const [isEnabled, setIsEnabled] = useState(false)

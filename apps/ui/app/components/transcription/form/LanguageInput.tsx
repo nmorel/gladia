@@ -1,6 +1,6 @@
 import {LANGUAGES, LANGUAGE_BEHAVIOURS} from '@gladia/zod-types'
 import {useState} from 'react'
-import {Select} from '../form'
+import {Select} from '~/components/form'
 
 type Behaviour = (typeof LANGUAGE_BEHAVIOURS)[keyof typeof LANGUAGE_BEHAVIOURS]
 
