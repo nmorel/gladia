@@ -37,6 +37,26 @@ Feel free to use it or create another one with the sign-up form.
 
 You can find audio and video samples inside folder `/samples`.
 
+## Other commands
+
+To run the test:
+
+```sh
+pnpm test
+```
+
+To run eslint:
+
+```sh
+pnpm lint
+```
+
+To run the ts check:
+
+```sh
+pnpm tscheck
+```
+
 ## Librairies used
 
 The project is a monorepo using [Nx](https://nx.dev/).
