@@ -4,6 +4,7 @@ import {MediaPlayer} from './MediaPlayer'
 import {useEffect, useRef, useState} from 'react'
 import {cx} from '~/helpers/classnames'
 import {JsonTree} from '../json-tree'
+import {CopyAndDownload} from './CopyAndDownload'
 
 export function FormResult({
   kind,
@@ -19,8 +20,15 @@ export function FormResult({
     containerRef?.current?.scrollIntoView({behavior: 'smooth'})
   }, [])
 
-  const [showRawResult, setShowRawResult] = useState(false)
-  const showJsonTree = showRawResult || !!data.json
+  const outputFormat = Object.keys(data).find((f) => f !== 'prediction_raw') as Exclude<
+    keyof TranscriptionResponseDto & {},
+    'prediction_raw'
+  >
+  const [tab, setTab] = useState<(keyof TranscriptionResponseDto & {}) | 'live'>(outputFormat)
+  const showJsonTree = tab === 'prediction_raw' || tab === 'json'
+  const showLive = (!!data.json && !!Object.keys(data.json).length) || !!data.srt || !!data.vtt
+  const hasRawResult = !!data.prediction_raw
+  const showTabs = showLive || hasRawResult
 
   return (
     <div ref={containerRef} className="min-h-screen">
@@ -31,44 +39,60 @@ export function FormResult({
         </label>
         <MediaPlayer kind={kind} src={file.dataUrl ?? file.url} />
       </div>
-      {data.prediction_raw && (
+      {showTabs && (
         <div className="tabs justify-center">
           <button
             type="button"
-            className={cx('tab tab-bordered', {'tab-active': !showRawResult})}
-            onClick={() => setShowRawResult(false)}
+            className={cx('tab tab-bordered', {'tab-active': tab === outputFormat})}
+            onClick={() => setTab(outputFormat)}
           >
-            {(Object.keys(data).find((f) => f !== 'prediction_raw') || 'Result').toUpperCase()}
+            {outputFormat.toUpperCase()}
           </button>
-          <button
-            type="button"
-            className={cx('tab tab-bordered', {'tab-active': showRawResult})}
-            onClick={() => setShowRawResult(true)}
-          >
-            RAW
-          </button>
+          {showLive && (
+            <button
+              type="button"
+              className={cx('tab tab-bordered', {'tab-active': tab === 'live'})}
+              onClick={() => setTab('live')}
+            >
+              LIVE
+            </button>
+          )}
+          {hasRawResult && (
+            <button
+              type="button"
+              className={cx('tab tab-bordered', {'tab-active': tab === 'prediction_raw'})}
+              onClick={() => setTab('prediction_raw')}
+            >
+              RAW
+            </button>
+          )}
         </div>
       )}
 
       <div
-        className={cx('border border-accent rounded-md px-2 py-1 mt-4 font-mono text-sm', {
-          'whitespace-pre-line': !showJsonTree,
-        })}
+        className={cx(
+          'relative border border-accent rounded-md px-2 py-1 mt-4 font-mono text-sm bg-base-300',
+          {
+            'whitespace-pre-line': !showJsonTree,
+          }
+        )}
       >
-        {showRawResult ? (
+        {tab === 'prediction_raw' ? (
           <JsonTree
             data={data.prediction_raw}
             expandNode={(path, lvl) => lvl <= 2 && path[path.length - 1] !== 'metadata'}
           />
-        ) : data.json ? (
-          <JsonTree data={data.json} />
-        ) : data.srt ?? data.vtt ? (
-          data.srt ?? data.vtt
-        ) : data.plain ?? data.txt ? (
-          data.plain ?? data.txt
-        ) : (
+        ) : tab === 'live' ? (
+          'Live stream'
+        ) : !data[tab] ? (
           'No result'
+        ) : tab === 'json' ? (
+          <JsonTree data={data.json} />
+        ) : (
+          data[tab]
         )}
+
+        {tab !== 'live' && !!data[tab] && <CopyAndDownload data={data} property={tab} />}
       </div>
     </div>
   )

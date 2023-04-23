@@ -1,6 +1,6 @@
 import type {TranscriptionResponseDto} from '@gladia/sdk'
 import {AudioToText, OUTPUT_FORMATS, VideoToText} from '@gladia/zod-types'
-import type {ActionArgs} from '@remix-run/node'
+import type {ActionArgs, V2_MetaFunction} from '@remix-run/node'
 import {Form, useActionData, useNavigation, useParams} from '@remix-run/react'
 import {useState} from 'react'
 import type {z} from 'zod'
@@ -16,6 +16,11 @@ import {
   TranslationInput,
 } from '~/components/transcription'
 import {userTokenCookie} from '~/cookies.server'
+import stylesheetUrl from '~/components/transcription/transcription.css'
+
+export function links() {
+  return [{rel: 'stylesheet', href: stylesheetUrl}]
+}
 
 export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) => {
   const userToken = await userTokenCookie.parse(request.headers.get('Cookie'))

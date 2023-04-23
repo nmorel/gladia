@@ -20,13 +20,15 @@ export function JsonTree<T>({
     }
   }
   return (
-    <JSONTree
-      data={data}
-      theme={theme}
-      invertTheme
-      sortObjectKeys
-      hideRoot
-      shouldExpandNodeInitially={shouldExpandNodeInitially}
-    />
+    <div className="json-tree-container">
+      <JSONTree
+        data={data}
+        theme={theme}
+        invertTheme={false}
+        sortObjectKeys
+        hideRoot
+        shouldExpandNodeInitially={shouldExpandNodeInitially}
+      />
+    </div>
   )
 }
