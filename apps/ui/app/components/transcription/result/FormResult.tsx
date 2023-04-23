@@ -7,15 +7,14 @@ import {JsonTree} from '~/components/json-tree'
 import {CopyAndDownload} from './CopyAndDownload'
 import {LiveSubtitle} from './LiveSubtitle'
 
-export function FormResult({
-  kind,
-  file,
-  data,
-}: {
+export function FormResult(props: {
   kind: 'audio' | 'video'
   file: MediaFile
   data: TranscriptionResponseDto
 }) {
+  // Store the result at mount in case we change value
+  const [{kind, file, data}] = useState(() => props)
+
   const containerRef = useRef<HTMLDivElement | null>(null)
   useEffect(() => {
     containerRef?.current?.scrollIntoView({behavior: 'smooth'})

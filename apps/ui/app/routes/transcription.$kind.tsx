@@ -10,10 +10,10 @@ import {
   DiarizationInput,
   FormResult,
   LanguageInput,
-  type MediaFile,
   MediaInput,
   Tabs,
   TranslationInput,
+  type MediaFile,
 } from '~/components/transcription'
 import stylesheetUrl from '~/components/transcription/transcription.css'
 import {userTokenCookie} from '~/cookies.server'
@@ -76,7 +76,7 @@ export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) =>
   return response
 }
 
-function hasError(data: object | null): data is {error: number} {
+function hasError(data: object | null | undefined): data is {error: number} {
   return !!data && 'error' in data
 }
 
