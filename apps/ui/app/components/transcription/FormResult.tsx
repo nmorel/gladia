@@ -3,6 +3,7 @@ import {MediaFile} from './MediaInput'
 import {MediaPlayer} from './MediaPlayer'
 import {useEffect, useRef, useState} from 'react'
 import {cx} from '~/helpers/classnames'
+import {JsonTree} from '../json-tree'
 
 export function FormResult({
   kind,
@@ -19,9 +20,10 @@ export function FormResult({
   }, [])
 
   const [showRawResult, setShowRawResult] = useState(false)
+  const showJsonTree = showRawResult || !!data.json
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className="min-h-screen">
       <div className="divider my-12">Result</div>
       <div className="flex flex-col mx-auto max-w-5xl">
         <label className="label font-semibold">
@@ -30,7 +32,7 @@ export function FormResult({
         <MediaPlayer kind={kind} src={file.dataUrl ?? file.url} />
       </div>
       {data.prediction_raw && (
-        <div className="tabs justify-center mb-4">
+        <div className="tabs justify-center">
           <button
             type="button"
             className={cx('tab tab-bordered', {'tab-active': !showRawResult})}
@@ -47,17 +49,27 @@ export function FormResult({
           </button>
         </div>
       )}
-      {showRawResult ? (
-        <pre>{JSON.stringify(data.prediction_raw, null, 2)}</pre>
-      ) : data.plain ?? data.txt ? (
-        <div>{data.plain ?? data.txt}</div>
-      ) : data.srt ?? data.vtt ? (
-        <div>{data.plain ?? data.txt}</div>
-      ) : data.json ? (
-        <pre>{JSON.stringify(data.json, null, 2)}</pre>
-      ) : (
-        'No result'
-      )}
+
+      <div
+        className={cx('border border-accent rounded-md px-2 py-1 mt-4 font-mono text-sm', {
+          'whitespace-pre-line': !showJsonTree,
+        })}
+      >
+        {showRawResult ? (
+          <JsonTree
+            data={data.prediction_raw}
+            expandNode={(path, lvl) => lvl <= 2 && path[path.length - 1] !== 'metadata'}
+          />
+        ) : data.json ? (
+          <JsonTree data={data.json} />
+        ) : data.srt ?? data.vtt ? (
+          data.srt ?? data.vtt
+        ) : data.plain ?? data.txt ? (
+          data.plain ?? data.txt
+        ) : (
+          'No result'
+        )}
+      </div>
     </div>
   )
 }
