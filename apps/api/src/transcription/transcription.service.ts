@@ -1,7 +1,7 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common'
 import {AudioToText, Transcription, VideoToText} from '@gladia/zod-types'
-import {z} from 'zod'
+import {Injectable, InternalServerErrorException} from '@nestjs/common'
 import {TokenService} from 'src/token/token.service'
+import {z} from 'zod'
 
 function isFile(
   value: string | number | boolean | Express.Multer.File

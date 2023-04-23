@@ -12,6 +12,7 @@ export class TranscriptionService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
+   * Transcript an audio file to text
    * @returns TranscriptionResponseDto
    * @throws ApiError
    */
@@ -37,6 +38,7 @@ export class TranscriptionService {
   }
 
   /**
+   * Transcript a video file to text
    * @returns TranscriptionResponseDto
    * @throws ApiError
    */

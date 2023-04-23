@@ -11,6 +11,7 @@ export class ProfileService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
+   * Return profile informations of the authenticated user
    * @returns GetProfileResponseDto
    * @throws ApiError
    */
@@ -32,6 +33,7 @@ export class ProfileService {
   }
 
   /**
+   * Update profile informations of the authenticated user
    * @returns any
    * @throws ApiError
    */
@@ -57,6 +59,7 @@ export class ProfileService {
   }
 
   /**
+   * Delete user account
    * @returns any
    * @throws ApiError
    */

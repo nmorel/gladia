@@ -14,7 +14,10 @@ export class TokenController {
   constructor(private readonly tokenService: TokenService) {}
 
   @Get()
-  @ApiOperation({operationId: 'get-token'})
+  @ApiOperation({
+    operationId: 'get-token',
+    summary: 'Get the Gladia API token of the authenticated user',
+  })
   @ApiCreatedResponse({
     type: GetTokenResponseDto,
   })

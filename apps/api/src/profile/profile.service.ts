@@ -1,5 +1,5 @@
-import {Injectable} from '@nestjs/common'
 import {User} from '@gladia/db'
+import {Injectable} from '@nestjs/common'
 import {UsersService} from 'src/users/users.service'
 
 @Injectable()

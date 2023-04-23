@@ -4,7 +4,7 @@
     "/auth/sign-in": {
       "post": {
         "operationId": "sign-in",
-        "summary": "",
+        "summary": "Sign-in to the app",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -36,7 +36,7 @@
     "/auth/sign-up": {
       "post": {
         "operationId": "sign-up",
-        "summary": "",
+        "summary": "Sign-up to the app",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -68,7 +68,7 @@
     "/profile": {
       "get": {
         "operationId": "get-profile",
-        "summary": "",
+        "summary": "Return profile informations of the authenticated user",
         "parameters": [
           {
             "name": "Authorization",
@@ -98,7 +98,7 @@
       },
       "patch": {
         "operationId": "update-profile",
-        "summary": "",
+        "summary": "Update profile informations of the authenticated user",
         "parameters": [
           {
             "name": "Authorization",
@@ -131,7 +131,7 @@
       },
       "delete": {
         "operationId": "delete-profile",
-        "summary": "",
+        "summary": "Delete user account",
         "parameters": [
           {
             "name": "Authorization",
@@ -156,7 +156,7 @@
     "/transcription/audio-to-text": {
       "post": {
         "operationId": "audio-to-text",
-        "summary": "",
+        "summary": "Transcript an audio file to text",
         "parameters": [
           {
             "name": "Authorization",
@@ -198,7 +198,7 @@
     "/transcription/video-to-text": {
       "post": {
         "operationId": "video-to-text",
-        "summary": "",
+        "summary": "Transcript a video file to text",
         "parameters": [
           {
             "name": "Authorization",
@@ -240,7 +240,7 @@
     "/token": {
       "get": {
         "operationId": "get-token",
-        "summary": "",
+        "summary": "Get the Gladia API token of the authenticated user",
         "parameters": [
           {
             "name": "Authorization",

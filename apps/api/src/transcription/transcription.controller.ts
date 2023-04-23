@@ -24,7 +24,7 @@ export class TranscriptionController {
 
   @Post('audio-to-text')
   @UseInterceptors(FileInterceptor('audio'))
-  @ApiOperation({operationId: 'audio-to-text'})
+  @ApiOperation({operationId: 'audio-to-text', summary: 'Transcript an audio file to text'})
   @ApiConsumes('multipart/form-data')
   @ApiCreatedResponse({type: TranscriptionResponseDto})
   audioToText(
@@ -39,7 +39,7 @@ export class TranscriptionController {
 
   @Post('video-to-text')
   @UseInterceptors(FileInterceptor('video'))
-  @ApiOperation({operationId: 'video-to-text'})
+  @ApiOperation({operationId: 'video-to-text', summary: 'Transcript a video file to text'})
   @ApiConsumes('multipart/form-data')
   @ApiCreatedResponse({type: TranscriptionResponseDto})
   videoToText(

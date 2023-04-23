@@ -39,7 +39,9 @@ You can find audio and video samples inside folder `/samples`.
 
 ## Librairies used
 
-For the UI app, it's [Remix](https://remix.run/) to easily handle authentication cookie and redirection.
+The project is a monorepo using [Nx](https://nx.dev/).
+
+For the UI app, it's [Remix](https://remix.run/) to easily handle cookie and redirection.
 
 For the API, it's [NestJS](https://nestjs.com/).  
 [Prisma](https://www.prisma.io/) and [SQLite](https://sqlite.org/index.html) are used for the database part.

@@ -10,6 +10,7 @@ export class TokenService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
+   * Get the Gladia API token of the authenticated user
    * @returns GetTokenResponseDto
    * @throws ApiError
    */

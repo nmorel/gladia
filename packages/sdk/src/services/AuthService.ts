@@ -12,6 +12,7 @@ export class AuthService {
   constructor(public readonly httpRequest: BaseHttpRequest) {}
 
   /**
+   * Sign-in to the app
    * @returns SignInUpResponseDto
    * @throws ApiError
    */
@@ -25,6 +26,7 @@ export class AuthService {
   }
 
   /**
+   * Sign-up to the app
    * @returns SignInUpResponseDto
    * @throws ApiError
    */

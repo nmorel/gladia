@@ -170,6 +170,7 @@ function TranscriptionForm({kind}: {kind: 'audio' | 'video'}) {
           </button>
         </div>
       </Form>
+
       {!isSubmitting && data ? (
         hasError(data) ? (
           <FormError statusCode={data.error} />

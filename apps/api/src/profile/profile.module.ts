@@ -1,9 +1,10 @@
 import {Module} from '@nestjs/common'
-import {ProfileService} from './profile.service'
-import {ProfileController} from './profile.controller'
-import {UsersModule} from 'src/users/users.module'
 import {AuthModule} from 'src/auth/auth.module'
+import {UsersModule} from 'src/users/users.module'
+import {ProfileController} from './profile.controller'
+import {ProfileService} from './profile.service'
 
+/** Module responsible of user profile (read, update, delete) */
 @Module({
   imports: [UsersModule, AuthModule],
   controllers: [ProfileController],

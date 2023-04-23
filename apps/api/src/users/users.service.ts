@@ -1,6 +1,6 @@
+import {PrismaClient, User} from '@gladia/db'
 import {Inject, Injectable} from '@nestjs/common'
 import {CustomPrismaService} from 'nestjs-prisma'
-import {PrismaClient, User} from '@gladia/db'
 
 @Injectable()
 export class UsersService {
