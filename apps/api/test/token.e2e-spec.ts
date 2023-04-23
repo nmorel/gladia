@@ -32,11 +32,21 @@ describe('Token - Read', () => {
     })
   })
 
-  it('no token', async () => {
+  it('no user token', async () => {
     const response = await request(app.getHttpServer())
       .get('/token')
       .set('Accept', 'application/json')
 
     expect(response.status).toEqual(401)
+  })
+
+  it('no api token', async () => {
+    delete process.env.GLADIA_API_TOKEN
+    const response = await request(app.getHttpServer())
+      .get('/token')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+
+    expect(response.status).toEqual(404)
   })
 })
