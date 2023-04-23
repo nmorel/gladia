@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "eslint ./",
     "tscheck": "tsc --noEmit",
-    "dev": "pnpm build & nx watch --projects=@gladia/api --includeDependencies -- pnpm build",
+    "dev": "nx watch --projects=@gladia/api --includeDependencies -- pnpm build",
     "build": "zx ./scripts/generate-sdk.mjs"
   },
   "dependencies": {

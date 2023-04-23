@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "eslint ./",
     "tscheck": "tsc --noEmit",
-    "dev": "pnpm build & nx watch --projects=@gladia/zod-types --includeDependencies -- pnpm build",
+    "dev": "nx watch --projects=@gladia/zod-types --includeDependencies -- pnpm build",
     "build": "tsup src/index.ts --format cjs,esm --dts --clean"
   },
   "dependencies": {

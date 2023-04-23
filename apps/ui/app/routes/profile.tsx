@@ -37,7 +37,7 @@ export const loader = async ({request}: LoaderArgs) => {
 
   return {
     apiToken,
-    apiDocUrl: process.env.GLADIA_API_DOC_URL,
+    apiDocUrl: `${process.env.GLADIA_API_URL}/doc`,
   }
 }
 

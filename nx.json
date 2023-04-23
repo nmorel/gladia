@@ -10,13 +10,13 @@
   },
   "targetDefaults": {
     "tscheck": {
-      "dependsOn": ["db:generate", "^build"]
+      "dependsOn": ["^build"]
     },
     "build": {
-      "dependsOn": ["db:generate", "^build"]
+      "dependsOn": ["^build"]
     },
     "dev": {
-      "dependsOn": ["db:generate", "^build"]
+      "dependsOn": ["^build", "prepare:dev"]
     }
   }
 }
