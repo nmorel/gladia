@@ -2,7 +2,7 @@ import {type TranscriptionResponseDto} from '@gladia/sdk'
 import {useState, type MutableRefObject, useEffect} from 'react'
 
 function parseSrtTime(time: string) {
-  const result = /([0-9]{2}):([0-9]{2}):([0-9]{2}[,\.][0-9]{3})/.exec(time)
+  const result = /([0-9]{2}):([0-9]{2}):([0-9]{2},[0-9]{3})/.exec(time)
   if (!result) return null
   const [, hh, mm, ss] = result
   return parseFloat(ss) + parseInt(mm, 10) * 60 + parseInt(hh, 10) * 60 * 60
@@ -30,9 +30,9 @@ export function LiveSubtitle({
     return () => {
       mediaElt.removeEventListener('timeupdate', cb)
     }
-  }, [])
+  }, [mediaEltRef])
 
-  if (!data[property]) return
+  if (!data[property]) return null
 
   let parsedValue:
     | Array<
@@ -51,7 +51,7 @@ export function LiveSubtitle({
       .split('\n\n')
       .map((line) => {
         const [, time, text] = line.split('\n')
-        const [, timeBegin, timeEnd] = /^([0-9:,\.]+) --> ([0-9:,\.]+)$/.exec(time) ?? []
+        const [, timeBegin, timeEnd] = /^([0-9:,]+) --> ([0-9:,]+)$/.exec(time) ?? []
         if (!timeBegin || !timeEnd || !text) return null
 
         const time_begin = parseSrtTime(timeBegin)
@@ -71,10 +71,10 @@ export function LiveSubtitle({
   }
 
   if (!parsedValue?.length) {
-    return 'No transcription'
+    return <span>No transcription</span>
   }
 
-  let {transcription, speaker} =
+  const {transcription, speaker} =
     parsedValue?.find(({time_begin, time_end}) => {
       return time_begin <= timestamp && time_end >= timestamp
     }) ?? {}
@@ -92,5 +92,5 @@ export function LiveSubtitle({
     speakerName = speaker
   }
 
-  return `${speakerName ? `${speakerName}: ` : ''}${transcription}`
+  return <span>{`${speakerName ? `${speakerName}: ` : ''}${transcription}`}</span>
 }

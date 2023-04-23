@@ -4,11 +4,12 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
-  ignorePatterns: ['dist/**/*'],
+  ignorePatterns: ['**/dist/**/*', '**/.cache/**/*', '**/build/**/*'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     'prettier/prettier': ['error'],
+    '@typescript-eslint/no-unused-vars': ['error', {ignoreRestSiblings: true}],
   },
   overrides: [
     {

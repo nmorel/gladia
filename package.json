@@ -10,7 +10,7 @@
   "devDependencies": {
     "@gladia/eslint": "workspace:*",
     "nx": "15.9.2",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.8"
   },
   "engines": {
     "node": ">=18"

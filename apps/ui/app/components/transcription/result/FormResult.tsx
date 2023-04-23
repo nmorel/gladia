@@ -1,5 +1,5 @@
-import {TranscriptionResponseDto} from '@gladia/sdk'
-import type {MediaFile} from '../types'
+import {type TranscriptionResponseDto} from '@gladia/sdk'
+import {type MediaFile} from '../types'
 import {MediaPlayer} from '../MediaPlayer'
 import {useEffect, useRef, useState} from 'react'
 import {cx} from '~/helpers/classnames'

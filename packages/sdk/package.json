@@ -12,6 +12,8 @@
     }
   },
   "scripts": {
+    "lint": "eslint ./",
+    "tscheck": "tsc --noEmit",
     "dev": "pnpm build & nx watch --projects=@gladia/api --includeDependencies -- pnpm build",
     "build": "zx ./scripts/generate-sdk.mjs"
   },
@@ -19,9 +21,12 @@
     "@gladia/api": "workspace:*"
   },
   "devDependencies": {
+    "@gladia/eslint": "workspace:*",
     "@gladia/tsconfig": "workspace:*",
+    "eslint": "^8.39.0",
     "openapi-typescript-codegen": "^0.24.0",
     "tsup": "^6.7.0",
+    "typescript": "^5.0.4",
     "zx": "^7.2.1"
   }
 }

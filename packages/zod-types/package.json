@@ -12,14 +12,19 @@
     }
   },
   "scripts": {
-    "deav": "pnpm build & nx watch --projects=@gladia/zod-types --includeDependencies -- pnpm build",
+    "lint": "eslint ./",
+    "tscheck": "tsc --noEmit",
+    "dev": "pnpm build & nx watch --projects=@gladia/zod-types --includeDependencies -- pnpm build",
     "build": "tsup src/index.ts --format cjs,esm --dts --clean"
   },
   "dependencies": {
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@gladia/eslint": "workspace:*",
     "@gladia/tsconfig": "workspace:*",
-    "tsup": "^6.7.0"
+    "eslint": "^8.39.0",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4"
   }
 }

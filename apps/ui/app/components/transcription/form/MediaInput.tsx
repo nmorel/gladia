@@ -2,7 +2,7 @@ import type {Dispatch, SetStateAction} from 'react'
 import {useRef} from 'react'
 import {Input} from '~/components/form'
 import {MediaPlayer} from '../MediaPlayer'
-import {MediaFile} from '../types'
+import {type MediaFile} from '../types'
 
 export function MediaInput({
   kind,

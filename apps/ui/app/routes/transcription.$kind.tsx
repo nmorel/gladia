@@ -1,6 +1,6 @@
 import type {TranscriptionResponseDto} from '@gladia/sdk'
 import {AudioToText, OUTPUT_FORMATS, VideoToText} from '@gladia/zod-types'
-import type {ActionArgs, V2_MetaFunction} from '@remix-run/node'
+import type {ActionArgs} from '@remix-run/node'
 import {Form, useActionData, useNavigation, useParams} from '@remix-run/react'
 import {useState} from 'react'
 import type {z} from 'zod'
@@ -10,13 +10,13 @@ import {
   DiarizationInput,
   FormResult,
   LanguageInput,
-  MediaFile,
+  type MediaFile,
   MediaInput,
   Tabs,
   TranslationInput,
 } from '~/components/transcription'
-import {userTokenCookie} from '~/cookies.server'
 import stylesheetUrl from '~/components/transcription/transcription.css'
+import {userTokenCookie} from '~/cookies.server'
 
 export function links() {
   return [{rel: 'stylesheet', href: stylesheetUrl}]
@@ -34,7 +34,6 @@ export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) =>
       try {
         payload = AudioToText.parse(formPayload)
       } catch (err) {
-        console.log(err)
         return {error: 400}
       }
 
@@ -65,7 +64,7 @@ export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) =>
   return response
 }
 
-function hasError(data: any): data is {error: number} {
+function hasError(data: object | null): data is {error: number} {
   return !!data && 'error' in data
 }
 
