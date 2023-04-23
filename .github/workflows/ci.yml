@@ -32,4 +32,4 @@ jobs:
         run: pnpm nx run-many --targets=lint,tscheck,build
 
       - name: Test E2E
-        run: pnpm nx run-many --targets=test:e2e
+        run: pnpm test

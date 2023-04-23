@@ -2,12 +2,12 @@
   "name": "gladia",
   "version": "1.0.0",
   "scripts": {
-    "lint": "dotenv -- nx run-many --target=lint",
-    "tscheck": "dotenv -- nx run-many --target=tscheck",
-    "build": "dotenv -- nx run-many --target=build",
+    "lint": "nx run-many --target=lint",
+    "tscheck": "nx run-many --target=tscheck",
+    "build": "nx run-many --target=build",
     "dev": "dotenv -- nx run-many --target=dev --parallel=10",
     "serve": "dotenv -- nx run-many --target=serve --parallel=10",
-    "test": "dotenv -- nx run-many --target=test,test:e2e"
+    "test": "DATABASE_URL=\"file:./test.db\" nx run-many --target=test,test:e2e"
   },
   "devDependencies": {
     "@gladia/eslint": "workspace:*",

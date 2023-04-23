@@ -16,16 +16,16 @@
       "dependsOn": ["^build"]
     },
     "dev": {
-      "dependsOn": ["prepare:dev", "^prepare:dev", "^build"]
+      "dependsOn": ["prepare:db", "^prepare:db", "^build"]
     },
     "serve": {
-      "dependsOn": ["prepare:dev", "^prepare:dev", "build", "^build"]
+      "dependsOn": ["prepare:db", "^prepare:db", "build", "^build"]
     },
     "test:e2e": {
-      "dependsOn": ["prepare:test", "^prepare:test", "^build"]
+      "dependsOn": ["prepare:db", "^prepare:db", "^build"]
     },
     "test:e2e:watch": {
-      "dependsOn": ["prepare:test", "^prepare:test", "^build"]
+      "dependsOn": ["prepare:db", "^prepare:db", "^build"]
     }
   }
 }
