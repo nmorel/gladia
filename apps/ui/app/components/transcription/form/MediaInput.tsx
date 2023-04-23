@@ -33,7 +33,7 @@ export function MediaInput({
         ref={fileInputRef}
         label={`Or pick a local ${kind} file:`}
         name={kind}
-        hidden={!!file}
+        hidden={isLocalFile}
         accept={`${kind}/*`}
         disabled={disabled}
         onChange={(evt) => {

@@ -3,7 +3,7 @@ import {ProfileService} from './profile.service'
 import {AuthGuard, UserRequest} from 'src/auth/auth.guard'
 import {ApiCreatedResponse, ApiHeaders, ApiOperation, ApiTags} from '@nestjs/swagger'
 import {ZodValidationPipe} from '@anatine/zod-nestjs'
-import {GetProfileResponseDto} from './profile.dto'
+import {GetProfileResponseDto, UpdateProfileDto} from './profile.dto'
 
 @Controller('profile')
 @UseGuards(AuthGuard)
@@ -25,7 +25,7 @@ export class ProfileController {
   @Patch()
   @ApiOperation({operationId: 'update-profile'})
   @ApiCreatedResponse()
-  updateProfile(@Req() {user}: UserRequest, @Body() body: {name: string}): Promise<void> {
+  updateProfile(@Req() {user}: UserRequest, @Body() body: UpdateProfileDto): Promise<void> {
     return this.profileService.updateProfile(user.id, body)
   }
 

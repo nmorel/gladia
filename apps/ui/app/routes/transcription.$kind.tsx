@@ -4,7 +4,7 @@ import type {ActionArgs} from '@remix-run/node'
 import {Form, useActionData, useNavigation, useParams} from '@remix-run/react'
 import {useState} from 'react'
 import type {z} from 'zod'
-import {apiClient} from '~/api.server'
+import {apiClient, parseApiError} from '~/api.server'
 import {Checkbox, FormError, Input, Select} from '~/components/form'
 import {
   DiarizationInput,
@@ -37,10 +37,16 @@ export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) =>
         return {error: 400}
       }
 
-      response = await apiClient.transcription.audioToText({
-        authorization: `Bearer ${userToken}`,
-        formData: payload,
-      })
+      try {
+        response = await apiClient.transcription.audioToText({
+          authorization: `Bearer ${userToken}`,
+          formData: payload,
+        })
+      } catch (err) {
+        const {code, text} = parseApiError(err)
+        console.error('Transcription error', `[${code}] ${text}`)
+        return {error: code}
+      }
       break
     }
     case 'video': {
@@ -51,10 +57,16 @@ export const action = async ({request, params: {kind = 'audio'}}: ActionArgs) =>
         return {error: 400}
       }
 
-      response = await apiClient.transcription.videoToText({
-        authorization: `Bearer ${userToken}`,
-        formData: payload,
-      })
+      try {
+        response = await apiClient.transcription.videoToText({
+          authorization: `Bearer ${userToken}`,
+          formData: payload,
+        })
+      } catch (err) {
+        const {code, text} = parseApiError(err)
+        console.error('Transcription error', `[${code}] ${text}`)
+        return {error: code}
+      }
       break
     }
     default: {
@@ -98,7 +110,7 @@ function TranscriptionForm({kind}: {kind: 'audio' | 'video'}) {
         method="post"
         encType="multipart/form-data"
         action={`/transcription/${kind}`}
-        className="w-full flex flex-col gap-5 max-w-sm mx-auto"
+        className="w-full flex flex-col gap-5 max-w-md mx-auto"
       >
         <h1 className="text-center text-3xl mt-5">
           <span className="capitalize">{kind}</span> Transcription

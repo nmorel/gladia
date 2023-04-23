@@ -2,10 +2,10 @@ import {type TranscriptionResponseDto} from '@gladia/sdk'
 import {useState, type MutableRefObject, useEffect} from 'react'
 
 function parseSrtTime(time: string) {
-  const result = /([0-9]{2}):([0-9]{2}):([0-9]{2},[0-9]{3})/.exec(time)
+  const result = /([0-9]{2}):([0-9]{2}):([0-9]{2}[,.][0-9]{3})/.exec(time)
   if (!result) return null
   const [, hh, mm, ss] = result
-  return parseFloat(ss) + parseInt(mm, 10) * 60 + parseInt(hh, 10) * 60 * 60
+  return parseFloat(ss.replace(',', '.')) + parseInt(mm, 10) * 60 + parseInt(hh, 10) * 60 * 60
 }
 
 export function LiveSubtitle({
@@ -47,11 +47,11 @@ export function LiveSubtitle({
     parsedValue = data[property]
   } else if (property === 'srt' || property === 'vtt') {
     parsedValue = (data[property] ?? '')
-      .replace(/^WEBVTT\n\n\n/, '')
       .split('\n\n')
       .map((line) => {
+        console.log({line})
         const [, time, text] = line.split('\n')
-        const [, timeBegin, timeEnd] = /^([0-9:,]+) --> ([0-9:,]+)$/.exec(time) ?? []
+        const [, timeBegin, timeEnd] = /^([0-9:,.]+) --> ([0-9:,.]+)$/.exec(time) ?? []
         if (!timeBegin || !timeEnd || !text) return null
 
         const time_begin = parseSrtTime(timeBegin)

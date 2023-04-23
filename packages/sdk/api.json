@@ -110,6 +110,16 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileDto"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": ""
@@ -226,6 +236,38 @@
           "transcription"
         ]
       }
+    },
+    "/token": {
+      "get": {
+        "operationId": "get-token",
+        "summary": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTokenResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "token"
+        ]
+      }
     }
   },
   "info": {
@@ -278,7 +320,8 @@
             "minLength": 6
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
@@ -299,12 +342,25 @@
             "format": "email"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
           "id",
           "email",
+          "name"
+        ]
+      },
+      "UpdateProfileDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
           "name"
         ]
       },
@@ -1212,6 +1268,17 @@
         "required": [
           "language_behaviour",
           "output_format"
+        ]
+      },
+      "GetTokenResponseDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
         ]
       }
     }

@@ -4,7 +4,7 @@ import {LANGUAGES, LANGUAGE_BEHAVIOURS, OUTPUT_FORMATS} from './enums'
 export const id = z.number().min(1).int()
 export const email = z.string().email()
 export const password = z.string().min(6)
-export const name = z.string()
+export const name = z.string().min(1)
 export const token = z.string()
 export const media = z.any()
 export const mediaUrl = z.string().url()

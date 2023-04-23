@@ -7,6 +7,7 @@ import {FetchHttpRequest} from './core/FetchHttpRequest'
 
 import {AuthService} from './services/AuthService'
 import {ProfileService} from './services/ProfileService'
+import {TokenService} from './services/TokenService'
 import {TranscriptionService} from './services/TranscriptionService'
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest
@@ -14,6 +15,7 @@ type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest
 export class Gladia {
   public readonly auth: AuthService
   public readonly profile: ProfileService
+  public readonly token: TokenService
   public readonly transcription: TranscriptionService
 
   public readonly request: BaseHttpRequest
@@ -36,6 +38,7 @@ export class Gladia {
 
     this.auth = new AuthService(this.request)
     this.profile = new ProfileService(this.request)
+    this.token = new TokenService(this.request)
     this.transcription = new TranscriptionService(this.request)
   }
 }

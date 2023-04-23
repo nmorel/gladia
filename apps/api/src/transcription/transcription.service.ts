@@ -1,6 +1,7 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common'
 import {AudioToText, Transcription, VideoToText} from '@gladia/zod-types'
 import {z} from 'zod'
+import {TokenService} from 'src/token/token.service'
 
 function isFile(
   value: string | number | boolean | Express.Multer.File
@@ -10,6 +11,8 @@ function isFile(
 
 @Injectable()
 export class TranscriptionService {
+  constructor(private tokenService: TokenService) {}
+
   audioToText(data: Omit<z.infer<typeof AudioToText>, 'audio'> & {audio?: Express.Multer.File}) {
     return this.mediaToText('audio', data)
   }
@@ -37,11 +40,11 @@ export class TranscriptionService {
       }
     })
     const response = await fetch(
-      `https://api.gladia.io/${kind}/text/${kind}-transcription/?model=large-v2`,
+      new URL(`${kind}/text/${kind}-transcription/?model=large-v2`, process.env.GLADIA_API_URL),
       {
         method: 'POST',
         headers: {
-          'x-gladia-key': `1b275cc1-220c-49b5-922d-46a0e2000e34`,
+          'x-gladia-key': (await this.tokenService.getToken()).token,
         },
         body: formData,
       }

@@ -5,6 +5,7 @@ import {AuthModule} from './auth/auth.module'
 import {ProfileModule} from './profile/profile.module'
 import {TranscriptionModule} from './transcription/transcription.module'
 import {PrismaClient} from '@gladia/db'
+import {TokenModule} from './token/token.module'
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import {PrismaClient} from '@gladia/db'
     AuthModule,
     ProfileModule,
     TranscriptionModule,
+    TokenModule,
   ],
 })
 export class AppModule {}

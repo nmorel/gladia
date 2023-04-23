@@ -4,15 +4,19 @@ export function FormError({statusCode}: {statusCode: number}) {
     case 400:
       errorLabel = 'Invalid form'
       break
+    case 401:
     case 403:
       errorLabel = 'Incorrect email/password'
+      break
+    case 404:
+      errorLabel = 'Not found'
       break
     default:
       errorLabel = 'An error occurred'
       break
   }
   return (
-    <div className="fixed top-0 left-0 p-4 w-screen">
+    <div className="fixed top-0 left-0 p-4 w-screen z-20">
       <div className="alert alert-error shadow-lg">
         <div>
           <svg

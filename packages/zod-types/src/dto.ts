@@ -34,6 +34,14 @@ export const Profile = z.object({
   name,
 })
 
+export const UpdateProfile = z.object({
+  name,
+})
+
+export const ApiToken = z.object({
+  token,
+})
+
 const AudioOrVideoToText = z.object({
   language_behaviour: languageBehaviour,
   language: language.optional(),

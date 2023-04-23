@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type {GetProfileResponseDto} from '../models/GetProfileResponseDto'
+import type {UpdateProfileDto} from '../models/UpdateProfileDto'
 
 import type {CancelablePromise} from '../core/CancelablePromise'
 import type {BaseHttpRequest} from '../core/BaseHttpRequest'
@@ -36,11 +37,13 @@ export class ProfileService {
    */
   public updateProfile({
     authorization,
+    requestBody,
   }: {
     /**
      * Bearer token
      */
     authorization: string
+    requestBody: UpdateProfileDto
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'PATCH',
@@ -48,6 +51,8 @@ export class ProfileService {
       headers: {
         Authorization: authorization,
       },
+      body: requestBody,
+      mediaType: 'application/json',
     })
   }
 
