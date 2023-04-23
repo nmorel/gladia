@@ -14,7 +14,7 @@ export function LiveSubtitle({
   mediaEltRef,
 }: {
   data: TranscriptionResponseDto
-  property: keyof TranscriptionResponseDto & {}
+  property: NonNullable<keyof TranscriptionResponseDto>
   mediaEltRef: MutableRefObject<HTMLAudioElement | HTMLVideoElement | null>
 }) {
   const [timestamp, setTimestamp] = useState(0)
@@ -37,7 +37,7 @@ export function LiveSubtitle({
   let parsedValue:
     | Array<
         Pick<
-          (TranscriptionResponseDto['json'] & {})[number],
+          NonNullable<TranscriptionResponseDto['json']>[number],
           'transcription' | 'time_begin' | 'time_end' | 'speaker'
         >
       >
@@ -65,7 +65,7 @@ export function LiveSubtitle({
           speaker: 'not_activated',
         } as const
       })
-      .filter(function <T>(val: T): val is T & {} {
+      .filter(function <T>(val: T): val is NonNullable<T> {
         return !!val
       })
   }

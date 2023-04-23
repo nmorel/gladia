@@ -5,7 +5,7 @@ export function CopyAndDownload({
   property,
 }: {
   data: TranscriptionResponseDto
-  property: keyof TranscriptionResponseDto & {}
+  property: NonNullable<keyof TranscriptionResponseDto>
 }) {
   const getDataAsText = () => {
     if (property === 'prediction_raw' || property === 'json') {

@@ -24,10 +24,10 @@ export function FormResult({
   const mediaEltRef = useRef<HTMLAudioElement | HTMLVideoElement | null>(null)
 
   const outputFormat = Object.keys(data).find((f) => f !== 'prediction_raw') as Exclude<
-    keyof TranscriptionResponseDto & {},
+    NonNullable<keyof TranscriptionResponseDto>,
     'prediction_raw'
   >
-  const [tab, setTab] = useState<(keyof TranscriptionResponseDto & {}) | 'live'>(outputFormat)
+  const [tab, setTab] = useState<NonNullable<keyof TranscriptionResponseDto> | 'live'>(outputFormat)
   const showJsonTree = tab === 'prediction_raw' || tab === 'json'
   const showLive = (!!data.json && !!Object.keys(data.json).length) || !!data.srt || !!data.vtt
   const hasRawResult = !!data.prediction_raw
