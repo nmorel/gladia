@@ -16,7 +16,10 @@
       "dependsOn": ["^build"]
     },
     "dev": {
-      "dependsOn": ["^build", "prepare:dev"]
+      "dependsOn": ["prepare:dev", "^build"]
+    },
+    "serve": {
+      "dependsOn": ["prepare:dev", "build", "^build"]
     }
   }
 }

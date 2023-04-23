@@ -5,7 +5,8 @@
     "lint": "dotenv -- nx run-many --target=lint",
     "tscheck": "dotenv -- nx run-many --target=tscheck",
     "build": "dotenv -- nx run-many --target=build",
-    "dev": "dotenv -- nx run-many --target=dev --parallel=10"
+    "dev": "dotenv -- nx run-many --target=dev --parallel=10",
+    "serve": "dotenv -- nx run-many --target=serve --parallel=10"
   },
   "devDependencies": {
     "@gladia/eslint": "workspace:*",

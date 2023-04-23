@@ -7,6 +7,7 @@
     "schema:generate": "node -r tsconfig-paths/register -r ts-node/register ./scripts/generateSchema.ts",
     "build": "nest build",
     "dev": "nest start --debug --watch",
+    "serve": "nest start",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
