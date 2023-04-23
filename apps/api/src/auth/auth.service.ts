@@ -1,4 +1,4 @@
-import {Prisma, type User} from '@gladia/db'
+import {type User} from '@gladia/db'
 import {
   ConflictException,
   Injectable,
