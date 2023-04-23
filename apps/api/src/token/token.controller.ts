@@ -1,7 +1,7 @@
 import {ZodValidationPipe} from '@anatine/zod-nestjs'
-import {Controller, Get, UseGuards, UsePipes} from '@nestjs/common'
+import {Controller, Get, HttpCode, UseGuards, UsePipes} from '@nestjs/common'
 import {ApiCreatedResponse, ApiHeaders, ApiOperation, ApiTags} from '@nestjs/swagger'
-import {AuthGuard} from 'src/auth/auth.guard'
+import {AuthGuard} from '../auth/auth.guard'
 import {GetTokenResponseDto} from './token.dto'
 import {TokenService} from './token.service'
 
@@ -14,6 +14,7 @@ export class TokenController {
   constructor(private readonly tokenService: TokenService) {}
 
   @Get()
+  @HttpCode(200)
   @ApiOperation({
     operationId: 'get-token',
     summary: 'Get the Gladia API token of the authenticated user',

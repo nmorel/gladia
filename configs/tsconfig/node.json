@@ -8,6 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "target": "es2018",
     "sourceMap": true,
     "skipLibCheck": true,

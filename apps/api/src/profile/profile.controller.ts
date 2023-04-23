@@ -1,7 +1,17 @@
 import {ZodValidationPipe} from '@anatine/zod-nestjs'
-import {Body, Controller, Delete, Get, Patch, Req, UseGuards, UsePipes} from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Patch,
+  Req,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common'
 import {ApiCreatedResponse, ApiHeaders, ApiOperation, ApiTags} from '@nestjs/swagger'
-import {AuthGuard, UserRequest} from 'src/auth/auth.guard'
+import {AuthGuard, UserRequest} from '../auth/auth.guard'
 import {GetProfileResponseDto, UpdateProfileDto} from './profile.dto'
 import {ProfileService} from './profile.service'
 
@@ -14,6 +24,7 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Get()
+  @HttpCode(200)
   @ApiOperation({
     operationId: 'get-profile',
     summary: 'Return profile informations of the authenticated user',
@@ -26,6 +37,7 @@ export class ProfileController {
   }
 
   @Patch()
+  @HttpCode(204)
   @ApiOperation({
     operationId: 'update-profile',
     summary: 'Update profile informations of the authenticated user',
@@ -36,6 +48,7 @@ export class ProfileController {
   }
 
   @Delete()
+  @HttpCode(204)
   @ApiOperation({operationId: 'delete-profile', summary: 'Delete user account'})
   @ApiCreatedResponse()
   deleteProfile(@Req() {user}: UserRequest): Promise<void> {

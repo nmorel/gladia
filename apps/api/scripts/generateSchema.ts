@@ -1,6 +1,6 @@
 import {NestFactory} from '@nestjs/core'
 import {buildOpenApiDocument} from '../src/swagger'
-import {AppModule} from 'src/app.module'
+import {AppModule} from '../src/app.module'
 import {writeFile} from 'node:fs/promises'
 
 async function generate(destFile: string) {

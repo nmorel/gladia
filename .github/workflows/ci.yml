@@ -28,5 +28,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint & Build
-        run: pnpm nx run-many --targets=lint,tscheck,build
+      - name: Lint & Build & Test
+        run: pnpm nx run-many --targets=lint,tscheck,build,test:e2e

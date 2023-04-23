@@ -15,6 +15,7 @@
     "lint": "eslint ./",
     "tscheck": "tsc --noEmit",
     "prepare:dev": "prisma db push --skip-generate && ts-node prisma/seed.ts",
+    "prepare:test": "DATABASE_URL=\"file:memory:\" pnpm prepare:dev",
     "dev": "nx watch --projects=@gladia/db --includeDependencies -- pnpm build",
     "build": "prisma generate && tsup src/index.ts --format cjs,esm --dts --clean"
   },

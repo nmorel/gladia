@@ -1,5 +1,5 @@
 import {ZodValidationPipe} from '@anatine/zod-nestjs'
-import {Body, Controller, Post, UsePipes} from '@nestjs/common'
+import {Body, Controller, HttpCode, Post, UsePipes} from '@nestjs/common'
 import {ApiCreatedResponse, ApiOperation, ApiTags} from '@nestjs/swagger'
 import {SignInDto, SignInUpResponseDto, SignUpDto} from './auth.dto'
 import {AuthService} from './auth.service'
@@ -11,6 +11,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-in')
+  @HttpCode(200)
   @ApiOperation({operationId: 'sign-in', summary: 'Sign-in to the app'})
   @ApiCreatedResponse({
     type: SignInUpResponseDto,
@@ -20,6 +21,7 @@ export class AuthController {
   }
 
   @Post('sign-up')
+  @HttpCode(200)
   @ApiOperation({operationId: 'sign-up', summary: 'Sign-up to the app'})
   @ApiCreatedResponse({
     type: SignInUpResponseDto,

@@ -1,12 +1,13 @@
 import {Module} from '@nestjs/common'
-import {TranscriptionService} from './transcription.service'
+import {TokenModule} from '../token/token.module'
+import {TranscriptionApi} from './transcription.api'
 import {TranscriptionController} from './transcription.controller'
-import {TokenModule} from 'src/token/token.module'
+import {TranscriptionService} from './transcription.service'
 
 /** Module responsible of the audio/video transcription and the calls to Gladia API */
 @Module({
   imports: [TokenModule],
   controllers: [TranscriptionController],
-  providers: [TranscriptionService],
+  providers: [TranscriptionService, TranscriptionApi],
 })
 export class TranscriptionModule {}

@@ -1,5 +1,10 @@
-import {type User} from '@gladia/db'
-import {Injectable, UnauthorizedException} from '@nestjs/common'
+import {Prisma, type User} from '@gladia/db'
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common'
 import {JwtService} from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import {UsersService} from '../users/users.service'
@@ -35,7 +40,19 @@ export class AuthService {
     name: string
   }): Promise<{token: string}> {
     password = await bcrypt.hash(password, 10)
-    const user = await this.usersService.createUser({email, password, name})
+
+    let user: User
+    try {
+      user = await this.usersService.createUser({email, password, name})
+    } catch (err) {
+      if (err.code === 'P2002') {
+        // unique constraint error
+        throw new ConflictException()
+      }
+      console.log(err)
+      throw new InternalServerErrorException()
+    }
+
     const token = await this.jwtService.signAsync({email: user.email, sub: user.id})
     return {token}
   }
