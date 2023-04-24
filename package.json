@@ -7,7 +7,7 @@
     "build": "nx run-many --target=build",
     "dev": "dotenv -- nx run-many --target=dev --parallel=10",
     "serve": "dotenv -- nx run-many --target=serve --parallel=10",
-    "test": "DATABASE_URL=\"file:./test.db\" nx run-many --target=test,test:e2e"
+    "test": "DATABASE_URL=\"file:./test.db\" nx run-many --target=test"
   },
   "devDependencies": {
     "@gladia/eslint": "workspace:*",

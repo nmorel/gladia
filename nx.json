@@ -21,10 +21,10 @@
     "serve": {
       "dependsOn": ["prepare:db", "^prepare:db", "build", "^build"]
     },
-    "test:e2e": {
+    "test": {
       "dependsOn": ["prepare:db", "^prepare:db", "^build"]
     },
-    "test:e2e:watch": {
+    "test:watch": {
       "dependsOn": ["prepare:db", "^prepare:db", "^build"]
     }
   }

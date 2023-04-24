@@ -8,7 +8,9 @@
     "serve": "cross-env NODE_ENV=production node ./server.js",
     "dev": "npm-run-all build --parallel \"dev:*\"",
     "dev:node": "cross-env NODE_ENV=development nodemon --require dotenv/config ./server.js --watch ./server.js --watch ../../packages/sdk/dist --watch ../../packages/zod-types/dist",
-    "dev:remix": "remix watch"
+    "dev:remix": "remix watch",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
     "@gladia/sdk": "workspace:*",
@@ -31,10 +33,14 @@
   "devDependencies": {
     "@remix-run/dev": "^1.15.0",
     "@remix-run/eslint-config": "^1.15.0",
+    "@swc/core": "^1.3.53",
+    "@swc/jest": "^0.2.26",
+    "@types/jest": "29.5.1",
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.8",
     "dotenv": "^16.0.3",
     "eslint": "^8.39.0",
+    "jest": "29.5.0",
     "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.3.1",

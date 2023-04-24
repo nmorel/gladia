@@ -8,8 +8,8 @@
     "build": "nest build",
     "dev": "nest start --debug --watch",
     "serve": "nest start",
-    "test:e2e": "jest --config ./test/jest-e2e.json --runInBand --coverage",
-    "test:e2e:watch": "pnpm test:e2e --watch"
+    "test": "jest --config ./test/jest.json --runInBand --coverage",
+    "test:watch": "pnpm test --watch"
   },
   "dependencies": {
     "@anatine/zod-nestjs": "^1.9.2",
