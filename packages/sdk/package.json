@@ -18,7 +18,8 @@
     "build": "zx ./scripts/generate-sdk.mjs"
   },
   "dependencies": {
-    "@gladia/api": "workspace:*"
+    "@gladia/api": "workspace:*",
+    "@gladia/zod-types": "workspace:*"
   },
   "devDependencies": {
     "@gladia/eslint": "workspace:*",

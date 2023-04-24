@@ -4,7 +4,7 @@
 
 export type AudioToTextDto = {
   audio?: Blob | null
-  language_behaviour: 'manual' | 'automatic single language' | 'automatic multiple languages'
+  language_behaviour?: 'manual' | 'automatic single language' | 'automatic multiple languages'
   language?:
     | 'afrikaans'
     | 'albanian'

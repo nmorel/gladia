@@ -43,7 +43,7 @@ export const ApiToken = z.object({
 })
 
 const AudioOrVideoToText = z.object({
-  language_behaviour: languageBehaviour,
+  language_behaviour: languageBehaviour.optional(),
   language: language.optional(),
 
   toggle_noise_reduction: toggle.optional(),

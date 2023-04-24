@@ -292,6 +292,9 @@ importers:
       '@gladia/api':
         specifier: workspace:*
         version: link:../../apps/api
+      '@gladia/zod-types':
+        specifier: workspace:*
+        version: link:../zod-types
     devDependencies:
       '@gladia/eslint':
         specifier: workspace:*

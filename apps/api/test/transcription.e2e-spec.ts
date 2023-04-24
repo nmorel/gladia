@@ -29,7 +29,6 @@ describe('Transcription - Audio', () => {
     const response = await request(app.getHttpServer())
       .post('/transcription/audio-to-text')
       .attach('audio', '../../samples/split_infinity.wav')
-      .field('language_behaviour', 'automatic single language')
       .field('output_format', 'txt')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -42,7 +41,6 @@ describe('Transcription - Audio', () => {
       'audio',
       {
         audio: expect.anything(),
-        language_behaviour: 'automatic single language',
         output_format: 'txt',
       },
       fakeApiToken
@@ -55,7 +53,6 @@ describe('Transcription - Audio', () => {
     const response = await request(app.getHttpServer())
       .post('/transcription/audio-to-text')
       .field('audio_url', 'http://files.gladia.io/example/audio-transcription/split_infinity.wav')
-      .field('language_behaviour', 'automatic single language')
       .field('output_format', 'plain')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -68,7 +65,6 @@ describe('Transcription - Audio', () => {
       'audio',
       {
         audio_url: 'http://files.gladia.io/example/audio-transcription/split_infinity.wav',
-        language_behaviour: 'automatic single language',
         output_format: 'plain',
       },
       fakeApiToken
@@ -80,7 +76,6 @@ describe('Transcription - Audio', () => {
 
     const response = await request(app.getHttpServer())
       .post('/transcription/audio-to-text')
-      .field('language_behaviour', 'automatic single language')
       .field('output_format', 'plain')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -94,7 +89,6 @@ describe('Transcription - Audio', () => {
     const response = await request(app.getHttpServer())
       .post('/transcription/audio-to-text')
       .field('audio_url', 'http://files.gladia.io/example/audio-transcription/split_infinity.wav')
-      .field('language_behaviour', 'automatic single language')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
 
@@ -117,7 +111,6 @@ describe('Transcription - Video', () => {
     const response = await request(app.getHttpServer())
       .post('/transcription/video-to-text')
       .attach('video', '../../samples/short-video.mp4')
-      .field('language_behaviour', 'automatic single language')
       .field('output_format', 'txt')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -130,7 +123,6 @@ describe('Transcription - Video', () => {
       'video',
       {
         video: expect.anything(),
-        language_behaviour: 'automatic single language',
         output_format: 'txt',
       },
       fakeApiToken
@@ -143,7 +135,6 @@ describe('Transcription - Video', () => {
     const response = await request(app.getHttpServer())
       .post('/transcription/video-to-text')
       .field('video_url', 'http://files.gladia.io/example/video-transcription/short-video.mp4')
-      .field('language_behaviour', 'automatic single language')
       .field('output_format', 'plain')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -156,7 +147,6 @@ describe('Transcription - Video', () => {
       'video',
       {
         video_url: 'http://files.gladia.io/example/video-transcription/short-video.mp4',
-        language_behaviour: 'automatic single language',
         output_format: 'plain',
       },
       fakeApiToken
@@ -168,7 +158,6 @@ describe('Transcription - Video', () => {
 
     const response = await request(app.getHttpServer())
       .post('/transcription/video-to-text')
-      .field('language_behaviour', 'automatic single language')
       .field('output_format', 'plain')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -182,7 +171,6 @@ describe('Transcription - Video', () => {
     const response = await request(app.getHttpServer())
       .post('/transcription/video-to-text')
       .field('video_url', 'http://files.gladia.io/example/video-transcription/short-video.mp4')
-      .field('language_behaviour', 'automatic single language')
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${token}`)
 
