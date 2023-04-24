@@ -37,7 +37,7 @@ export const loader = async ({request}: LoaderArgs) => {
 
   return {
     apiToken,
-    apiDocUrl: `${process.env.GLADIA_API_URL}/doc`,
+    apiDocUrl: `${process.env.GLADIA_API_URL}/docs`,
   }
 }
 
@@ -152,6 +152,7 @@ export default function Profile() {
                 <button
                   type="button"
                   className="btn btn-square p-3"
+                  title={`Copy API token into the clipboard`}
                   onClick={(evt) => {
                     const input = evt.currentTarget
                       .previousElementSibling as HTMLInputElement | null

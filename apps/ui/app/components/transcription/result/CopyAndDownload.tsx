@@ -22,6 +22,9 @@ export function CopyAndDownload({
       <button
         type="button"
         className="btn btn-outline btn-sm w-8 p-2 mr-2"
+        title={`Copy ${
+          property === 'prediction_raw' ? 'raw' : property
+        } transcription into the clipboard`}
         onClick={(evt) => {
           const input = document.createElement('textarea')
           input.value = getDataAsText()
@@ -40,6 +43,7 @@ export function CopyAndDownload({
       <button
         type="button"
         className="btn btn-outline btn-sm w-8 p-2"
+        title={`Download ${property === 'prediction_raw' ? 'raw' : property} transcription`}
         onClick={(evt) => {
           let extension: string
           if (property === 'prediction_raw' || property === 'json') {

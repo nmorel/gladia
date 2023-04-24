@@ -24,6 +24,7 @@ export function FormError({statusCode}: {statusCode: number}) {
             className="stroke-current flex-shrink-0 h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
+            aria-hidden
           >
             <path
               strokeLinecap="round"
