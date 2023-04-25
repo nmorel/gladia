@@ -26,6 +26,9 @@
     },
     "test:watch": {
       "dependsOn": ["prepare:db", "^prepare:db", "^build"]
+    },
+    "test:e2e": {
+      "dependsOn": ["prepare:test:e2e"]
     }
   }
 }
