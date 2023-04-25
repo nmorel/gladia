@@ -6,10 +6,13 @@
     "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@gladia/db": "workspace:*",
     "@gladia/eslint": "workspace:*",
     "@gladia/tsconfig": "workspace:*",
     "@playwright/test": "^1.32.3",
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "18.16.0",
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.39.0",
     "typescript": "^5.0.4"

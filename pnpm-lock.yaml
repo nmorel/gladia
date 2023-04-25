@@ -301,6 +301,9 @@ importers:
 
   packages/e2e:
     devDependencies:
+      '@gladia/db':
+        specifier: workspace:*
+        version: link:../db
       '@gladia/eslint':
         specifier: workspace:*
         version: link:../../configs/eslint
@@ -310,9 +313,15 @@ importers:
       '@playwright/test':
         specifier: ^1.32.3
         version: 1.32.3
+      '@types/bcrypt':
+        specifier: ^5.0.0
+        version: 5.0.0
       '@types/node':
         specifier: 18.16.0
         version: 18.16.0
+      bcrypt:
+        specifier: ^5.1.0
+        version: 5.1.0
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
