@@ -39,7 +39,7 @@ You can find audio and video samples inside folder `/samples`.
 
 ## Other commands
 
-To run the test:
+To run the tests:
 
 ```sh
 pnpm test
@@ -57,6 +57,12 @@ To run the ts check:
 pnpm tscheck
 ```
 
+To run the E2E tests:
+
+```sh
+pnpm test:e2e
+```
+
 ## Librairies used
 
 The project is a monorepo using [Nx](https://nx.dev/).
@@ -69,3 +75,5 @@ For the API, it's [NestJS](https://nestjs.com/).
 [Zod](https://zod.dev/) is used to validate inputs/outputs.
 
 A SDK for the API is generated with the help of [openapi-typescript-codegen](https://github.com/ferdikoomen/openapi-typescript-codegen).
+
+[Playwright](https://playwright.dev/) is used to run the end-to-end tests.
