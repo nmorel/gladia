@@ -2,13 +2,15 @@ import {defineConfig, devices} from '@playwright/test'
 import * as dotenv from 'dotenv'
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
+ * Load all env files
  */
 dotenv.config({path: '../../.env'})
+dotenv.config({path: '../../apps/api/.env'})
+dotenv.config({path: '../../apps/ui/.env'})
 dotenv.config()
 
 const uiUrl = `http://${process.env.UI_HOST ?? 'localhost'}:${process.env.UI_PORT ?? 3000}`
+const apiUrl = `http://${process.env.API_HOST ?? 'localhost'}:${process.env.API_PORT ?? 3300}`
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -75,15 +77,14 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: 'pnpm nx run-many --target=serve',
+      command: 'pnpm nx serve @gladia/ui',
       url: uiUrl,
       reuseExistingServer: !process.env.CI,
     },
-    // {
-    //   command: 'npm run backend',
-    //   url: 'http://127.0.0.1:3333',
-    //   timeout: 120 * 1000,
-    //   reuseExistingServer: !process.env.CI,
-    // },
+    {
+      command: 'pnpm nx serve @gladia/api',
+      url: `${apiUrl}/doc`,
+      reuseExistingServer: !process.env.CI,
+    },
   ],
 })
