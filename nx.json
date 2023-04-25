@@ -4,7 +4,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["lint", "tscheck", "build"]
+        "cacheableOperations": ["lint", "tscheck", "build", "test"]
       }
     }
   },
@@ -26,6 +26,9 @@
     },
     "test:watch": {
       "dependsOn": ["prepare:db", "^prepare:db", "^build"]
+    },
+    "test:e2e": {
+      "dependsOn": ["prepare:test:e2e"]
     }
   }
 }
