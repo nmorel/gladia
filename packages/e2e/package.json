@@ -1,0 +1,16 @@
+{
+  "name": "@gladia/e2e",
+  "version": "1.0.0",
+  "scripts": {
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@gladia/eslint": "workspace:*",
+    "@gladia/tsconfig": "workspace:*",
+    "@playwright/test": "^1.32.3",
+    "@types/node": "18.16.0",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.39.0",
+    "typescript": "^5.0.4"
+  }
+}

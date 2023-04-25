@@ -1,0 +1,3 @@
+{
+  "extends": "@gladia/tsconfig/node.json"
+}
